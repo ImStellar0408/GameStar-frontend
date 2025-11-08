@@ -8,9 +8,9 @@ export default function Header() {
       </div>
 
       <div className="head-right">
-        <p><a href="#">HOME</a></p>
-        <p><a href="#">GAMES</a></p>
-        <p><a href="#">ABOUT</a></p>
+        <p><a href="#" className='home-btn'>HOME</a></p>
+        <p><a href="#" className='about-btn'>ABOUT</a></p>
+        <p><a href="#" className='info-btn'>INFO</a></p>
         <button>SIGN IN</button>
       </div>
     </header>
