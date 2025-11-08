@@ -1,4 +1,5 @@
 import Header from '../components/header'
+import InfoCard from '../components/info-card'
 import './home.css'
 
 export default function Home() {
@@ -38,42 +39,34 @@ export default function Home() {
                 <h3>EXPLORE ABOUT YOUR FAVORITE GAMES</h3>
                 <p>Make your gaming experience more immersive with our detailed game information and community insights.</p>
 
-                <div className="info-card">
-                    <div className="card">
-                        <h1>BATTLE ROYALES</h1>
-                        <p>Discover the most popular battle royale games and join the fight!</p>
-                        <video src="" autoPlay muted loop playsInline></video>
-                        <button>EXPLORE</button>
-                    </div>
+                <div className="info-cards">
 
-                    <div className="card">
-                        <h1>BATTLE ROYALES</h1>
-                        <p>Discover the most popular battle royale games and join the fight!</p>
-                        <video src="" autoPlay muted loop playsInline></video>
-                        <button>EXPLORE</button>
-                    </div>
-                    
-                    <div className="card">
-                        <h1>BATTLE ROYALES</h1>
-                        <p>Discover the most popular battle royale games and join the fight!</p>
-                        <video src="" autoPlay muted loop playsInline></video>
-                        <button>EXPLORE</button>
-                    </div>
+                    <InfoCard
+                        title="BATTLE ROYALES"
+                        description="Discover the most popular battle royale games and join the fight!"
+                        videoSrc="src\assets\feature-1.mp4"
+                    />
+                    <InfoCard
+                        title="RPG ADVENTURES"
+                        description="Embark on epic quests and explore vast worlds in our top RPG selections."
+                        videoSrc="src\assets\feature-2.mp4"
+                    />
+                    <InfoCard
+                        title="STRATEGY GAMES"
+                        description="Test your tactical skills with our collection of the best strategy games."
+                        videoSrc="src\assets\feature-3.mp4"
+                    />
+                    <InfoCard
+                        title="2D PLATFORMERS"
+                        description="Test your skills with our collection of the best 2D platformers."
+                        videoSrc="src\assets\feature-4.mp4"
+                    />
+                    <InfoCard
+                        title="TACTICAL SHOOTERS"
+                        description="Test your tactical skills with our collection of the best tactical shooters."
+                        videoSrc="src\assets\feature-5.mp4"
+                    />
 
-                    <div className="card">
-                        <h1>BATTLE ROYALES</h1>
-                        <p>Discover the most popular battle royale games and join the fight!</p>
-                        <video src="" autoPlay muted loop playsInline></video>
-                        <button>EXPLORE</button>
-                    </div>
-
-                    <div className="card">
-                        <video src="" autoPlay muted loop playsInline></video>
-                    </div>
-
-                    <div className="card">
-                        <video src="" autoPlay muted loop playsInline></video>
-                    </div>
                 </div>
 
             </section>
