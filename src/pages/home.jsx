@@ -8,7 +8,7 @@ export default function Home() {
     return (
         <>
             <Header />
-            <section className='hero-section'>
+            <section className='hero-section autoBlur'>
                 <div className="hero-vid">
                     <video loop autoPlay muted playsInline className='hero-video'>
                         <source src="src/assets/hero1.mp4" type="video/mp4" />
@@ -28,9 +28,12 @@ export default function Home() {
 
             <section className="about-section">
                 <p>Welcome to GameStar</p>
-                <h1>DISCOVER THE WORLD'S LARGEST SHARED ADVENTURE</h1>
 
-                <div className="image-box">
+                <div className="autoBlur">
+                    <h1>DISCOVER THE WORLD'S LARGEST SHARED ADVENTURE</h1>
+                </div>
+
+                <div className="image-box autoTakeFull">
                     <img src="./src/assets/aboutimg.jpeg" alt="aboutimg" />
                 </div>
                 <h4>Join a community of gamers and share your experiences.</h4>
@@ -75,11 +78,13 @@ export default function Home() {
 
             <section className="call-to-action">
                 <p>Ready to level up your gaming experience?</p>
-                <h1>JOIN GAMESTART AND START PLAYING AT ANOTHER LEVEL!</h1>
+                <div className="autoBlur">
+                    <h1>JOIN GAMESTART AND START PLAYING AT ANOTHER LEVEL!</h1>
+                </div>
                 <button>GET STARTED</button>
-                <img className = "img1" src="src\assets\hx2er6ahcrv11.gif" alt="" />
-                <img className = "img2" src="src\assets\0dgpicu0tru61.gif" alt="" />
-                <img className = "img3" src="src\assets\download.gif" alt="" />
+                <img className = "img1 autoDisplay" src="src\assets\hx2er6ahcrv11.gif" alt="" />
+                <img className = "img2 autoDisplay" src="src\assets\0dgpicu0tru61.gif" alt="" />
+                <img className = "img3 autoDisplay" src="src\assets\download.gif" alt="" />
             </section>
 
             <Footer />
