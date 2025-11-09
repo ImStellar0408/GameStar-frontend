@@ -1,6 +1,8 @@
 import Header from '../components/header'
 import InfoCard from '../components/info-card'
+import Footer from '../components/footer'
 import './home.css'
+import 'boxicons'
 
 export default function Home() {
     return (
@@ -70,6 +72,17 @@ export default function Home() {
                 </div>
 
             </section>
+
+            <section className="call-to-action">
+                <p>Ready to level up your gaming experience?</p>
+                <h1>JOIN GAMESTART AND START PLAYING AT ANOTHER LEVEL!</h1>
+                <button>GET STARTED</button>
+                <img className = "img1" src="src\assets\hx2er6ahcrv11.gif" alt="" />
+                <img className = "img2" src="src\assets\0dgpicu0tru61.gif" alt="" />
+                <img className = "img3" src="src\assets\download.gif" alt="" />
+            </section>
+
+            <Footer />
 
         </>
     )

@@ -3,6 +3,7 @@ import './header.css'
 export default function Header() {
   return (
     <header className="container">
+
       <div className="head-left">
         <img src="src/assets/GameStar.SVG" alt="Logo" />
       </div>

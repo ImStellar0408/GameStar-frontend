@@ -1,0 +1,96 @@
+.footer {
+    width: 100%;
+    background-color: rgba(14,16,20,0.6);
+    backdrop-filter: blur(8px);
+    color: #fff;
+}
+
+.footer-inner{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* shift the whole footer group slightly to the left */
+    transform: translateX(-30px);
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+
+.footer p {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+}
+
+.footer ul{
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.footer a{
+    text-decoration: none;
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border-radius: 50%;
+    border: 1px solid rgb(0, 130, 211);
+    transition: 0.2s ease-in-out;
+    margin: 0 10px;
+}
+
+.footer a box-icon, .footer a svg {
+    display: block;
+    width: 22px;
+    height: 22px;
+}
+
+.footer a:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        0 6px 18px rgba(74,189,252,0.18),
+        0 0 28px rgba(74,189,252,0.16),
+        inset 0 0 8px rgba(74,189,252,0.06);
+    border-color: rgba(74,189,252,0.9);
+    background: rgba(74,189,252,0.04);
+    filter: drop-shadow(0 6px 18px rgba(74,189,252,0.18));
+}
+
+.footer a:focus, .footer a:active {
+    outline: none;
+    box-shadow:
+        0 8px 26px rgba(74,189,252,0.28),
+        0 0 36px rgba(74,189,252,0.22),
+        inset 0 0 10px rgba(74,189,252,0.08);
+    border-color: rgba(74,189,252,1);
+}
+
+
+.footer-left, .footer-center, .footer-right{
+    display: flex;
+    align-items: center;
+}
+
+/* layout sizing: left and right fixed, center grows and is centered */
+.footer-left{ flex: 0 0 220px; }
+.footer-center{ flex: 1 1 auto; flex-direction: column; gap: 6px; align-items: center; text-align: center; }
+.footer-right{ flex: 0 0 160px; justify-content: flex-end; }
+
+.follow{
+    font-size: 12px;
+    color: #cfd8e3;
+}
+
+.footer-logo img{
+    display: block;
+    max-height: 44px;
+    width: auto;
+}

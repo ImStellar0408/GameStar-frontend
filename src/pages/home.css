@@ -178,3 +178,76 @@ hero-section {
     height: 100%;
     margin-top: 30px;
 }
+
+.call-to-action{
+    position: relative;
+    width: 100%;
+    margin-top: 100px;
+    margin-bottom: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    margin-bottom: 200px;
+}
+
+.call-to-action .img1{
+    position: absolute;
+    top: 10%;
+    right: 20px;
+    height: 400px;
+    clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+}
+
+.call-to-action .img2{
+    position: absolute;
+    left: 50px;
+    top: 10px;
+    height: 200px;
+    clip-path: polygon(0% 0%, 59% 0, 100% 50%, 82% 100%, 0% 100%);
+}
+
+.call-to-action .img3{
+    position: absolute;
+    left: 5%;
+    bottom: 1%;
+    height: 250px;
+    clip-path: polygon(0% 0%, 59% 0, 100% 50%, 82% 100%, 0% 100%);
+}
+
+.call-to-action p {
+    margin-top: 100px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+}
+
+.call-to-action h1 {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 70px;
+    max-width: 550px;
+    text-align: center;
+    margin: 25px 0px;
+    text-transform: uppercase;
+    background: linear-gradient(to right, #4acfee, #53f8c9, #02d79a, #6070fd, #2a46ff, #0099ff, #4acfee);
+    background-size: 200%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: animateGradient 2.5s linear infinite;
+}
+
+.call-to-action button{
+    padding: 10px 25px;
+    border: 1px solid gray;
+    background-color: #0f1217;
+    color: gray;
+    border-radius: 20px;
+    box-shadow: 0 0 5px lightgray;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.call-to-action button:hover{
+    box-shadow: 0 0 15px lightgray;
+    opacity: 0.7;
+}
