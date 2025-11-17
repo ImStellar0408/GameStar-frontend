@@ -23,7 +23,7 @@ function LoginPage() {
   const onSubmit = handleSubmit(async (data) => {
     try {
       setIsLoading(true);
-      await signIn(data); // ← CAMBIA "login" por "signIn"
+      await signIn(data);
     } catch (error) {
       console.log("Error in login:", error);
     } finally {

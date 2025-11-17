@@ -23,7 +23,6 @@ function RegisterPage() {
       await signUp(data);
     } catch (error) {
       console.log("Error in onSubmit:", error);
-      // El error ya está manejado en el AuthContext
     } finally {
       setIsLoading(false);
     }
