@@ -1,0 +1,304 @@
+/* register.css */
+.register-page {
+  min-height: 100vh;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.2) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%),
+    linear-gradient(135deg, #000000 0%, #1a1a2e 50%, #16213e 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efecto de partículas luminosas */
+.register-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(2px 2px at 20% 30%, rgba(255, 255, 255, 0.3) 50%, transparent 100%),
+    radial-gradient(2px 2px at 40% 70%, rgba(255, 255, 255, 0.2) 50%, transparent 100%),
+    radial-gradient(1px 1px at 60% 20%, rgba(255, 255, 255, 0.4) 50%, transparent 100%),
+    radial-gradient(1px 1px at 80% 80%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+  background-size: 200px 200px;
+  animation: sparkle 8s linear infinite;
+}
+
+@keyframes sparkle {
+  0% { background-position: 0 0, 100px 50px, 200px 100px, 300px 150px; }
+  100% { background-position: 200px 200px, 300px 250px, 400px 300px, 500px 350px; }
+}
+
+.register-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-radius: 24px;
+  padding: 48px 40px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 420px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Efecto de borde luminoso */
+.register-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 24px;
+  padding: 1px;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.4) 0%, 
+    rgba(255, 255, 255, 0.1) 30%,
+    rgba(255, 255, 255, 0.05) 70%,
+    rgba(255, 255, 255, 0.2) 100%);
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.register-title {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 2.75rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  text-align: center;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.95) 0%, 
+    rgba(255, 255, 255, 0.7) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.register-subtitle {
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 1.15rem;
+  line-height: 1.5;
+  font-weight: 400;
+  letter-spacing: -0.2px;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.register-form input {
+  padding: 18px 20px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  font-size: 1.05rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 400;
+  backdrop-filter: blur(10px);
+}
+
+.register-form input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 400;
+}
+
+.register-form input:focus {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 0 0 4px rgba(255, 255, 255, 0.05),
+    0 8px 25px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.register-form input:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.register-form button {
+  padding: 18px;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.9) 0%, 
+    rgba(255, 255, 255, 0.7) 100%);
+  color: #000;
+  border: none;
+  border-radius: 16px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: none;
+  letter-spacing: -0.2px;
+  margin-top: 10px;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.register-form button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.4), 
+    transparent);
+  transition: left 0.6s ease;
+}
+
+.register-form button:hover::before {
+  left: 100%;
+}
+
+.register-form button:hover {
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 1) 0%, 
+    rgba(255, 255, 255, 0.9) 100%);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 12px 30px rgba(255, 255, 255, 0.15),
+    0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.register-form button:active {
+  transform: translateY(0);
+  box-shadow: 
+    0 6px 20px rgba(255, 255, 255, 0.1),
+    0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Efectos de partículas flotantes mejoradas */
+.glass-particle {
+  position: absolute;
+  background: radial-gradient(circle, 
+    rgba(255, 255, 255, 0.1) 0%, 
+    rgba(255, 255, 255, 0) 70%);
+  border-radius: 50%;
+  animation: float-glass 20s infinite linear;
+  pointer-events: none;
+}
+
+.glass-particle:nth-child(1) {
+  width: 120px;
+  height: 120px;
+  top: 10%;
+  left: 5%;
+  animation-delay: 0s;
+  animation-duration: 25s;
+}
+
+.glass-particle:nth-child(2) {
+  width: 80px;
+  height: 80px;
+  top: 20%;
+  right: 8%;
+  animation-delay: -8s;
+  animation-duration: 20s;
+}
+
+.glass-particle:nth-child(3) {
+  width: 150px;
+  height: 150px;
+  bottom: 15%;
+  left: 10%;
+  animation-delay: -15s;
+  animation-duration: 30s;
+}
+
+@keyframes float-glass {
+  0%, 100% {
+    transform: 
+      translate(0, 0) 
+      rotate(0deg) 
+      scale(1);
+    opacity: 0.3;
+  }
+  25% {
+    transform: 
+      translate(30px, -40px) 
+      rotate(90deg) 
+      scale(1.1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: 
+      translate(-20px, 30px) 
+      rotate(180deg) 
+      scale(0.9);
+    opacity: 0.2;
+  }
+  75% {
+    transform: 
+      translate(40px, 20px) 
+      rotate(270deg) 
+      scale(1.05);
+    opacity: 0.4;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+  .register-card {
+    padding: 40px 28px;
+    margin: 20px;
+    border-radius: 20px;
+  }
+  
+  .register-title {
+    font-size: 2.25rem;
+  }
+  
+  .register-subtitle {
+    font-size: 1.05rem;
+  }
+  
+  .register-form input {
+    padding: 16px 18px;
+  }
+}
+
+/* Efecto de carga sutil */
+@keyframes shimmer {
+  0% { background-position: -200px 0; }
+  100% { background-position: calc(200px + 100%) 0; }
+}
+
+.register-form button.loading {
+  background: linear-gradient(90deg, 
+    rgba(255, 255, 255, 0.7) 0%, 
+    rgba(255, 255, 255, 0.9) 50%, 
+    rgba(255, 255, 255, 0.7) 100%);
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite;
+}
