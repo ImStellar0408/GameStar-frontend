@@ -1,7 +1,7 @@
 import Header from '../components/header'
 import InfoCard from '../components/info-card'
 import Footer from '../components/footer'
-import './home.css'
+import '../styles/home.css'
 import 'boxicons'
 
 export default function Home() {

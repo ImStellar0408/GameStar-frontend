@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import "./register.css";
+import "../styles/register.css";
 
 function RegisterPage() {
   const { register, handleSubmit, formState: { errors: formErrors } } = useForm();

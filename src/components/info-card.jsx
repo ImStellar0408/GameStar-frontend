@@ -1,4 +1,4 @@
-import './info-card.css';
+import '../styles/info-card.css';
 
 export default function InfoCard({ title, description, videoSrc }) {
   return (
