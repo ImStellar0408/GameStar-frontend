@@ -72,9 +72,6 @@
   -webkit-mask: 
     linear-gradient(#fff 0 0) content-box, 
     linear-gradient(#fff 0 0);
-  mask: 
-    linear-gradient(#fff 0 0) content-box, 
-    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
@@ -98,7 +95,7 @@
 .register-subtitle {
   color: rgba(255, 255, 255, 0.6);
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 32px;
   font-size: 1.15rem;
   line-height: 1.5;
   font-weight: 400;
@@ -108,7 +105,7 @@
 .register-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 
 .register-form input {
@@ -157,7 +154,7 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   text-transform: none;
   letter-spacing: -0.2px;
-  margin-top: 10px;
+  margin-top: 8px;
   backdrop-filter: blur(10px);
   position: relative;
   overflow: hidden;
@@ -196,6 +193,38 @@
   box-shadow: 
     0 6px 20px rgba(255, 255, 255, 0.1),
     0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos para mensajes de error */
+.error-message {
+  background: rgba(255, 59, 48, 0.1);
+  border: 1px solid rgba(255, 59, 48, 0.3);
+  color: rgba(255, 159, 159, 0.9);
+  padding: 12px 16px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  font-size: 0.95rem;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  animation: slideIn 0.3s ease-out;
+}
+
+.register-form p {
+  color: rgba(255, 159, 159, 0.9);
+  font-size: 0.9rem;
+  margin: -8px 0 8px 4px;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Efectos de partículas flotantes mejoradas */
@@ -281,10 +310,15 @@
   
   .register-subtitle {
     font-size: 1.05rem;
+    margin-bottom: 28px;
   }
   
   .register-form input {
     padding: 16px 18px;
+  }
+  
+  .register-form button {
+    padding: 16px;
   }
 }
 
@@ -301,4 +335,117 @@
     rgba(255, 255, 255, 0.7) 100%);
   background-size: 200px 100%;
   animation: shimmer 1.5s infinite;
+  cursor: not-allowed;
+}
+
+/* Agrega esto en tu register.css */
+
+/* Estilos para mensajes de error de campos */
+.field-error {
+  color: rgba(255, 159, 159, 0.9);
+  font-size: 0.9rem;
+  margin: -8px 0 8px 4px;
+  animation: slideIn 0.3s ease-out;
+  display: block;
+  background: rgba(255, 59, 48, 0.1);
+  border: 1px solid rgba(255, 59, 48, 0.3);
+  padding: 8px 12px;
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+}
+
+/* Mensajes de error del servidor */
+.error-message {
+  background: rgba(255, 59, 48, 0.1);
+  border: 1px solid rgba(255, 59, 48, 0.3);
+  color: rgba(255, 159, 159, 0.9);
+  padding: 12px 16px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  font-size: 0.95rem;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Agrega esto al CSS existente */
+
+.field-error {
+  color: rgba(255, 159, 159, 0.9);
+  font-size: 0.9rem;
+  margin: -8px 0 8px 4px;
+  animation: slideIn 0.3s ease-out;
+  display: block;
+  background: rgba(255, 59, 48, 0.1);
+  border: 1px solid rgba(255, 59, 48, 0.3);
+  padding: 8px 12px;
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+}
+
+.error-message {
+  background: rgba(255, 59, 48, 0.1);
+  border: 1px solid rgba(255, 59, 48, 0.3);
+  color: rgba(255, 159, 159, 0.9);
+  padding: 12px 16px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  font-size: 0.95rem;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Estado disabled del botón */
+.register-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.register-form button:disabled:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.register-form button:disabled::before {
+  display: none;
+}
+
+/* Loading state */
+.register-form button.loading {
+  background: linear-gradient(90deg, 
+    rgba(255, 255, 255, 0.7) 0%, 
+    rgba(255, 255, 255, 0.9) 50%, 
+    rgba(255, 255, 255, 0.7) 100%);
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite;
+  cursor: not-allowed;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200px 0; }
+  100% { background-position: calc(200px + 100%) 0; }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
