@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import { registerRequest } from "../api/auth.js";
+import { registerRequest, loginRequest} from "../api/auth.js";
 
 export const AuthContext = createContext();
 
@@ -16,7 +16,6 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [errors, setErrors] = useState([]);
 
-  // Limpiar errores después de 5 segundos
   useEffect(() => {
     if (errors.length > 0) {
       const timer = setTimeout(() => {
@@ -37,28 +36,45 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.log("Registration error:", error.response?.data);
       
-      // Extraer los errores del backend
       if (error.response?.data?.error) {
-        // Si el backend devuelve { error: ["mensaje1", "mensaje2"] }
         setErrors(error.response.data.error);
       } else if (error.response?.data?.message) {
-        // Si el backend devuelve { message: "mensaje" }
         setErrors([error.response.data.message]);
       } else {
-        // Error genérico
         setErrors(["Registration failed. Please try again."]);
       }
-      throw error; // Propagar el error para que el componente lo capture
+      throw error;
+    }
+  };
+
+  const signIn = async (userData) => {
+    try {
+      const res = await loginRequest(userData);
+      console.log("Login successful:", res.data);
+      setUser(res.data);
+      setIsAuthenticated(true);
+      return res.data;
+    } catch (error) {
+      console.log("Login error:", error.response?.data);
+      if (error.response?.data?.error) {
+        setErrors(error.response.data.error);
+      } else if (error.response?.data?.message) {
+        setErrors([error.response.data.message]);
+      } else {
+        setErrors(["Login failed. Please try again."]);
+      }
+      throw error;
     }
   };
 
   return (
     <AuthContext.Provider value={{
       signUp, 
+      signIn,
       user, 
       isAuthenticated, 
       errors,
-      clearErrors: () => setErrors([]) // Función para limpiar errores manualmente
+      clearErrors: () => setErrors([])
     }}>
       {children}
     </AuthContext.Provider>
