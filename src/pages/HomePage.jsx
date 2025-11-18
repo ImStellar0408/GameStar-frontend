@@ -1,4 +1,4 @@
-import Header from '../components/header'
+import Header from '../components/Navbar'
 import InfoCard from '../components/info-card'
 import Footer from '../components/footer'
 import '../styles/home.css'
@@ -7,7 +7,6 @@ import 'boxicons'
 export default function Home() {
     return (
         <>
-            <Header />
             <section className='hero-section autoBlur'>
                 <div className="hero-vid">
                     <video loop autoPlay muted playsInline className='hero-video'>

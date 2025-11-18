@@ -11,11 +11,14 @@ import ProfilePage from "./pages/ProfilePage.jsx";
 
 import ProtectedRoute from "./ProtectedRoute.jsx";
 
+import Navbar from "./components/Navbar.jsx";
+
 function App() {
     return (
         <AuthProvider>
             <GameProvider>
                 <BrowserRouter>
+                    <Navbar />
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/login" element={<LoginPage />} />
