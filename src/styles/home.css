@@ -23,7 +23,7 @@ body {
 .hero-info-1 {
     z-index: 1;
     position: absolute;
-    top: 80px;
+    top: 100px;
     left: 50px;
 }
 
@@ -50,6 +50,7 @@ body {
 .hero-info-1 button {
     background-color: #79bdfc;
     border: 2px solid #79bdfc;
+    margin-top: 20px;
     padding: 10px 40px;
     border-radius: 20px;
     cursor: pointer;
@@ -212,8 +213,8 @@ body {
 .call-to-action .img3{
     position: absolute;
     left: 5%;
-    bottom: 1%;
     height: 250px;
+    margin-top: 17rem;
     clip-path: polygon(0% 0%, 59% 0, 100% 50%, 82% 100%, 0% 100%);
 }
 

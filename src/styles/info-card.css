@@ -14,7 +14,8 @@
     top: 10px;
     left: 5%;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    font-size: 60px;
+    font-size: 50px;
+    margin-top: 10px;
     z-index: 1;
     background: linear-gradient(to right, #4acfee, #53f8c9, #02d79a, #6070fd, #2a46ff, #0099ff, #4acfee);
     background-size: 200%;
