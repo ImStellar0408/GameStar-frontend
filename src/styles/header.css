@@ -63,14 +63,15 @@ nav::before {
     pointer-events: none;
 }
 
-/* Logo - ELIMINADO todo filtro que lo volvía blanco */
-nav img {
+/* Logo - QUITADO el filtro que lo volvía blanco */
+.nav-logo {
     height: 45px;
     width: auto;
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    /* REMOVED: filter: brightness(0) invert(1); */
 }
 
-nav img:hover {
+.nav-logo:hover {
     transform: scale(1.08);
     filter: drop-shadow(0 4px 12px rgba(255, 255, 255, 0.3));
 }
@@ -89,6 +90,7 @@ nav ul li {
     margin: 0;
 }
 
+/* Enlaces normales */
 nav ul li a {
     color: rgba(255, 255, 255, 0.85);
     text-decoration: none;
@@ -115,13 +117,81 @@ nav ul li a:hover {
         0 4px 12px rgba(255, 255, 255, 0.1);
 }
 
-nav ul li a:active {
-    transform: translateY(0);
-    background: rgba(255, 255, 255, 0.08);
-    transition: all 0.1s ease;
+/* Mensaje de bienvenida con icono MEJORADO */
+.welcome-message {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 10px 18px;
+    background: linear-gradient(135deg, 
+        rgba(120, 119, 198, 0.25) 0%, 
+        rgba(120, 219, 255, 0.15) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Botones de auth */
+/* Icono de usuario MEJORADO - más visible */
+.welcome-message i {
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.9);
+    background: linear-gradient(135deg, #a8b1ff, #667eea);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.welcome-message span {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+}
+
+/* Botón "Add Game" - ESTILO DESTACADO (verde) */
+nav ul li:nth-last-child(3) a {
+    background: linear-gradient(135deg, 
+        rgba(100, 255, 100, 0.25) 0%, 
+        rgba(150, 255, 150, 0.15) 100%);
+    border: 1px solid rgba(100, 255, 100, 0.25);
+    color: rgba(220, 255, 220, 0.95);
+    font-weight: 600;
+}
+
+nav ul li:nth-last-child(3) a:hover {
+    background: linear-gradient(135deg, 
+        rgba(100, 255, 100, 0.35) 0%, 
+        rgba(150, 255, 150, 0.25) 100%);
+    border: 1px solid rgba(100, 255, 100, 0.35);
+    box-shadow: 
+        0 8px 25px rgba(100, 255, 100, 0.25),
+        0 4px 12px rgba(150, 255, 150, 0.15);
+}
+
+/* Botón "Log Out" - ESTILO DIFERENCIADO (rojo) */
+nav ul li:nth-last-child(2) a {
+    background: linear-gradient(135deg, 
+        rgba(255, 100, 100, 0.25) 0%, 
+        rgba(255, 150, 150, 0.15) 100%);
+    border: 1px solid rgba(255, 100, 100, 0.25);
+    color: rgba(255, 220, 220, 0.95);
+    font-weight: 600;
+}
+
+nav ul li:nth-last-child(2) a:hover {
+    background: linear-gradient(135deg, 
+        rgba(255, 100, 100, 0.35) 0%, 
+        rgba(255, 150, 150, 0.25) 100%);
+    border: 1px solid rgba(255, 100, 100, 0.35);
+    box-shadow: 
+        0 8px 25px rgba(255, 100, 100, 0.25),
+        0 4px 12px rgba(255, 150, 150, 0.15);
+}
+
+/* Botones de auth cuando NO está logueado */
 nav ul li:last-child a,
 nav ul li:nth-last-child(2) a {
     background: linear-gradient(135deg, 
@@ -168,7 +238,11 @@ nav::after {
     z-index: -1;
 }
 
-/* NO HAY PADDING EN BODY - el navbar está completamente superpuesto */
+/* Loading state */
+nav div {
+    color: rgba(255, 255, 255, 0.7);
+    font-style: italic;
+}
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -191,7 +265,21 @@ nav::after {
         font-size: 0.92rem;
     }
     
-    nav img {
+    /* Ajustes para el mensaje de bienvenida en móvil */
+    .welcome-message {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+        order: -1;
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+    }
+    
+    .welcome-message i {
+        font-size: 1.1rem;
+    }
+    
+    .nav-logo {
         height: 38px;
     }
 }
@@ -213,7 +301,16 @@ nav::after {
         font-size: 0.88rem;
     }
     
-    nav img {
+    .welcome-message {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+    }
+    
+    .welcome-message i {
+        font-size: 1rem;
+    }
+    
+    .nav-logo {
         height: 32px;
     }
 }
