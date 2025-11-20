@@ -13,35 +13,39 @@ function MyReviewsPage() {
 
     return (
         <div className="reviews-page">
-            <div className="page-header">
-                <div className="header-actions">
-                    <div>
-                        <h1>My Reviews</h1>
-                        <p>Your personal gaming experiences and opinions</p>
+            <div className="page-container">
+                <div className="page-header">
+                    <div className="header-content">
+                        <div className="header-text">
+                            <h1>My Reviews</h1>
+                            <p>Your personal gaming experiences and opinions</p>
+                        </div>
+                        <Link to="/reviews/new" className="action-button">
+                            <i className='bx bx-plus'></i>
+                            Write New Review
+                        </Link>
                     </div>
-                    <Link to="/reviews/new" className="add-review-btn">
-                        <i className='bx bx-plus'></i>
-                        Write New Review
-                    </Link>
                 </div>
-            </div>
-            
-            <div className="reviews-grid">
-                {myReviews.map(review => (
-                    <ReviewCard key={review._id} review={review} isOwner={true} />
-                ))}
-            </div>
 
-            {myReviews.length === 0 && (
-                <div className="empty-state">
-                    <i className='bx bx-message-square-detail'></i>
-                    <h2>No reviews yet</h2>
-                    <p>Start sharing your gaming experiences by writing your first review!</p>
-                    <Link to="/reviews/new" className="empty-state-btn">
-                        Write Your First Review
-                    </Link>
-                </div>
-            )}
+                {myReviews.length > 0 ? (
+                    <div className="reviews-grid">
+                        {myReviews.map(review => (
+                            <ReviewCard key={review._id} review={review} isOwner={true} />
+                        ))}
+                    </div>
+                ) : (
+                    <div className="empty-state">
+                        <div className="empty-content">
+                            <i className='bx bx-message-square-detail'></i>
+                            <h2>No reviews yet</h2>
+                            <p>Start sharing your gaming experiences by writing your first review!</p>
+                            <Link to="/reviews/new" className="empty-action-button">
+                                Write Your First Review
+                            </Link>
+                        </div>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

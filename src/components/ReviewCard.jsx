@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import '../styles/reviewcard.css';
+import '../styles/reviewspage.css';
 import { useReview } from '../context/ReviewContext';
 import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
@@ -36,7 +36,10 @@ function ReviewCard({ review, isOwner = false }) {
         }
     };
 
-    const toggleExpand = () => {
+    const toggleExpand = (e) => {
+        if (e.target.closest('.action-btn') || e.target.closest('.action-buttons')) {
+            return;
+        }
         if (!isDeleting && !isDeleted) {
             setIsExpanded(!isExpanded);
         }
@@ -76,13 +79,8 @@ function ReviewCard({ review, isOwner = false }) {
 
     return (
         <>
-            {isExpanded && (
-                <div className="modal-overlay" onClick={toggleExpand}></div>
-            )}
-            
-            <div className={`review-card ${isExpanded ? 'expanded' : ''}`}>
-                
-                {/* Card Normal */}
+            {/* Card Normal */}
+            <div className="review-card">
                 <div className="review-card-compact" onClick={toggleExpand}>
                     <div className="compact-header">
                         <div className="game-info">
@@ -114,7 +112,7 @@ function ReviewCard({ review, isOwner = false }) {
 
                     {review.reviewText && (
                         <div className="review-preview">
-                            <p>{review.reviewText}</p>
+                            <p>{review.reviewText.substring(0, 100)}...</p>
                         </div>
                     )}
 
@@ -146,21 +144,40 @@ function ReviewCard({ review, isOwner = false }) {
                     </div>
                 </div>
 
-                {/* Card Expandida */}
-                {isExpanded && (
-                    <div className="review-card-expanded">
+                {/* Overlay de eliminación */}
+                {isDeleting && (
+                    <div className="delete-overlay">
+                        <div className="delete-animation">
+                            <i className='bx bx-trash'></i>
+                            <span>Deleting Review...</span>
+                        </div>
+                    </div>
+                )}
+            </div>
+
+            {/* Modal Expandido */}
+            {isExpanded && (
+                <div className="modal-overlay" onClick={() => setIsExpanded(false)}>
+                    <div className="review-card-expanded" onClick={(e) => e.stopPropagation()}>
                         <div className="expanded-container">
+                            {/* Header */}
                             <div className="expanded-header">
                                 <div className="title-section">
                                     <h2>{review.gameTitle}</h2>
                                     <p className="developer">{review.developer}</p>
                                 </div>
-                                <button className="close-button" onClick={toggleExpand}>
+                                <button 
+                                    className="close-button" 
+                                    onClick={() => setIsExpanded(false)}
+                                >
                                     <i className='bx bx-x'></i>
                                 </button>
                             </div>
 
+                            {/* Contenido Principal */}
                             <div className="expanded-content">
+                                
+                                {/* Rating Principal */}
                                 <div className="main-rating-section">
                                     <div className="rating-visual">
                                         <div className="stars-large">
@@ -179,6 +196,7 @@ function ReviewCard({ review, isOwner = false }) {
                                     )}
                                 </div>
 
+                                {/* Grid de Detalles */}
                                 <div className="details-grid">
                                     <div className="detail-card">
                                         <i className='bx bx-category'></i>
@@ -212,6 +230,7 @@ function ReviewCard({ review, isOwner = false }) {
                                     </div>
                                 </div>
 
+                                {/* Review Text */}
                                 {review.reviewText && (
                                     <div className="review-text-section">
                                         <h4>Review</h4>
@@ -221,6 +240,7 @@ function ReviewCard({ review, isOwner = false }) {
                                     </div>
                                 )}
 
+                                {/* Información del Usuario */}
                                 <div className="user-info-section">
                                     <div className="user-avatar">
                                         <i className='bx bx-user'></i>
@@ -235,6 +255,7 @@ function ReviewCard({ review, isOwner = false }) {
                                     </div>
                                 </div>
 
+                                {/* Botones de Acción */}
                                 {actualIsOwner && (
                                     <div className="action-buttons">
                                         <Link to={`/reviews/edit/${review._id}`} className="action-btn edit-btn">
@@ -254,17 +275,8 @@ function ReviewCard({ review, isOwner = false }) {
                             </div>
                         </div>
                     </div>
-                )}
-
-                {isDeleting && (
-                    <div className="delete-overlay">
-                        <div className="delete-animation">
-                            <i className='bx bx-trash'></i>
-                            <span>Deleting Review...</span>
-                        </div>
-                    </div>
-                )}
-            </div>
+                </div>
+            )}
         </>
     );
 }
