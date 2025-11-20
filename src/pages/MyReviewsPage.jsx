@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useReview } from "../context/ReviewContext.jsx";
 import ReviewCard from "../components/ReviewCard.jsx";
+import { Link } from "react-router-dom";
 import '../styles/reviewspage.css';
 
 function MyReviewsPage() {
@@ -13,8 +14,16 @@ function MyReviewsPage() {
     return (
         <div className="reviews-page">
             <div className="page-header">
-                <h1>My Reviews</h1>
-                <p>Your personal gaming experiences and opinions</p>
+                <div className="header-actions">
+                    <div>
+                        <h1>My Reviews</h1>
+                        <p>Your personal gaming experiences and opinions</p>
+                    </div>
+                    <Link to="/reviews/new" className="add-review-btn">
+                        <i className='bx bx-plus'></i>
+                        Write New Review
+                    </Link>
+                </div>
             </div>
             
             <div className="reviews-grid">
@@ -28,6 +37,9 @@ function MyReviewsPage() {
                     <i className='bx bx-message-square-detail'></i>
                     <h2>No reviews yet</h2>
                     <p>Start sharing your gaming experiences by writing your first review!</p>
+                    <Link to="/reviews/new" className="empty-state-btn">
+                        Write Your First Review
+                    </Link>
                 </div>
             )}
         </div>
