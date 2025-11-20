@@ -1,32 +1,52 @@
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { get, useForm } from "react-hook-form";
+import { useNavigate, useParams } from "react-router-dom";
 import '../styles/gameform.css'
 import { useGame } from "../context/GameContext";
+import { useEffect } from "react";
 
 function GameFormPage() {
-    const { register, handleSubmit, formState: { errors: formErrors } } = useForm();
-    const { createGame, errors: gameErrors, loading } = useGame();
+    const { register, handleSubmit, formState: { errors: formErrors }, setValue } = useForm();
+    const { createGame, errors: gameErrors, loading, getGame } = useGame();
     const navigate = useNavigate();
+    const params = useParams();
+
+    useEffect(() => {
+        async function loadGame(){
+
+            if (params.id) {
+                const game = await getGame(params.id);
+                setValue("title", game.title);
+                setValue("genre", game.genre);
+                setValue("platform", game.platform);
+                setValue("releaseYear", game.releaseYear);
+                setValue("developer", game.developer);
+                setValue("coverImageUrl", game.coverImageUrl);
+                setValue("description", game.description);
+                setValue("isCompleted", game.isCompleted);
+            }
+        }
+        loadGame();
+    }, []);
+
 
     const onSubmit = handleSubmit(async (data) => {
         try {
             console.log("Datos del formulario:", data);
             
-            // Convertir y mapear a los nombres que espera el backend
             const gameDataToSend = {
                 title: data.title,
                 genre: data.genre,
                 platform: data.platform,
                 releaseYear: Number(data.releaseYear),
                 developer: data.developer,
-                coverImageUrl: data.coverImageUrl, // ← Cambiado a coverImageUrl
+                coverImageUrl: data.coverImageUrl, 
                 description: data.description,
-                isCompleted: Boolean(data.isCompleted) // ← Cambiado a isCompleted
+                isCompleted: Boolean(data.isCompleted) 
             };
             
             console.log("Datos convertidos:", gameDataToSend);
             await createGame(gameDataToSend);
-            navigate("/games");
+             
         } catch (error) {
             console.log("Error completo:", error);
             console.log("Respuesta del error:", error.response?.data);
@@ -100,12 +120,18 @@ function GameFormPage() {
                                 <option value="PC">PC</option>
                                 <option value="PlayStation 5">PlayStation 5</option>
                                 <option value="PlayStation 4">PlayStation 4</option>
-                                <option value="Xbox Series X">Xbox Series X</option>
+                                <option value="PlayStation 3">PlayStation 3</option>
+                                <option value="PlayStation 2">PlayStation 2</option>
+                                <option value="PlayStation 1">PlayStation 1</option>
+                                <option value="PS Vita">PS Vita</option>
+                                <option value="Xbox Series X/S">Xbox Series X/S</option>
                                 <option value="Xbox One">Xbox One</option>
+                                <option value="Xbox 360">Xbox 360</option>
+                                <option value="Xbox Classic">Xbox Classic</option>
                                 <option value="Nintendo Switch">Nintendo Switch</option>
                                 <option value="Mobile">Mobile</option>
                                 <option value="Nintendo 3DS">Nintendo 3DS</option>
-                                <option value="PS Vita">PS Vita</option>
+                                <option value="Varios">Varios</option>
                             </select>
                         </div>
                         {formErrors.platform && <span className="field-error">{formErrors.platform.message}</span>}
