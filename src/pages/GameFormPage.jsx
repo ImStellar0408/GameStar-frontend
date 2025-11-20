@@ -1,50 +1,36 @@
-import { useForm } from "react-hook-form";
+import { get, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import '../styles/gameform.css'
 import { useGame } from "../context/GameContext";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 function GameFormPage() {
-    const { register, handleSubmit, formState: { errors: formErrors }, setValue, reset } = useForm();
-    const { createGame, updateGame, errors: gameErrors, loading, getGame } = useGame();
+    const { register, handleSubmit, formState: { errors: formErrors }, setValue } = useForm();
+    const { createGame, errors: gameErrors, loading, getGame } = useGame();
     const navigate = useNavigate();
     const params = useParams();
-    const [isEditing, setIsEditing] = useState(false);
-    const [fetching, setFetching] = useState(false);
-    const [submitting, setSubmitting] = useState(false);
 
     useEffect(() => {
-        async function loadGame() {
+        async function loadGame(){
+
             if (params.id) {
-                try {
-                    setIsEditing(true);
-                    setFetching(true);
-                    const game = await getGame(params.id);
-                    // Resetear el formulario con los datos del juego
-                    reset({
-                        title: game.title,
-                        genre: game.genre,
-                        platform: game.platform,
-                        releaseYear: game.releaseYear,
-                        developer: game.developer,
-                        coverImageUrl: game.coverImageUrl,
-                        description: game.description,
-                        isCompleted: game.isCompleted
-                    });
-                } catch (error) {
-                    console.error("Error loading game:", error);
-                    navigate("/games");
-                } finally {
-                    setFetching(false);
-                }
+                const game = await getGame(params.id);
+                setValue("title", game.title);
+                setValue("genre", game.genre);
+                setValue("platform", game.platform);
+                setValue("releaseYear", game.releaseYear);
+                setValue("developer", game.developer);
+                setValue("coverImageUrl", game.coverImageUrl);
+                setValue("description", game.description);
+                setValue("isCompleted", game.isCompleted);
             }
         }
         loadGame();
-    }, [params.id, reset, getGame, navigate]);
+    }, []);
+
 
     const onSubmit = handleSubmit(async (data) => {
         try {
-            setSubmitting(true);
             console.log("Datos del formulario:", data);
             
             const gameDataToSend = {
@@ -59,22 +45,11 @@ function GameFormPage() {
             };
             
             console.log("Datos convertidos:", gameDataToSend);
-            
-            if (isEditing) {
-                await updateGame(params.id, gameDataToSend);
-                console.log("Game updated successfully");
-            } else {
-                await createGame(gameDataToSend);
-                console.log("Game created successfully");
-            }
-            
+            await createGame(gameDataToSend);
             navigate("/games");
-             
         } catch (error) {
             console.log("Error completo:", error);
             console.log("Respuesta del error:", error.response?.data);
-        } finally {
-            setSubmitting(false);
         }
     });
 
@@ -82,13 +57,9 @@ function GameFormPage() {
         <div className="game-form-page">
             <div className="crystal-card">
                 <div className="card-header">
-                    <img className="card-icon" src="../src/assets/GameStar.svg" alt="Game Star" />
-                    <h1 className="card-title">
-                        {isEditing ? "Edit Video Game" : "Add Video Game"}
-                    </h1>
-                    <p className="card-subtitle">
-                        {isEditing ? "Update your game information" : "Register your gaming adventures"}
-                    </p>
+                    <img className="card-icon" src="../src/assets/GameStar.svg" />
+                    <h1 className="card-title">Add Video Game</h1>
+                    <p className="card-subtitle">Register your gaming adventures</p>
                 </div>
                 
                 {/* Mostrar errores del backend */}
@@ -107,7 +78,7 @@ function GameFormPage() {
                                 type="text"
                                 placeholder="Game title"
                                 {...register("title", { required: "Title is required" })}
-                                disabled={fetching || submitting}
+                                disabled={loading}
                             />
                         </div>
                         {formErrors.title && <span className="field-error">{formErrors.title.message}</span>}
@@ -119,7 +90,7 @@ function GameFormPage() {
                             <i className='bx bx-category'></i>
                             <select
                                 {...register("genre", { required: "Genre is required" })}
-                                disabled={fetching || submitting}
+                                disabled={loading}
                             >
                                 <option value="">Select genre</option>
                                 <option value="Action">Action</option>
@@ -143,7 +114,7 @@ function GameFormPage() {
                             <i className='bx bx-devices'></i>
                             <select
                                 {...register("platform", { required: "Platform is required" })}
-                                disabled={fetching || submitting}
+                                disabled={loading}
                             >
                                 <option value="">Select platform</option>
                                 <option value="PC">PC</option>
@@ -181,7 +152,7 @@ function GameFormPage() {
                                         min: { value: 1950, message: "Year must be after 1950" },
                                         max: { value: new Date().getFullYear() + 2, message: "Year cannot be too far in the future" }
                                     })}
-                                    disabled={fetching || submitting}
+                                    disabled={loading}
                                 />
                             </div>
                             {formErrors.releaseYear && <span className="field-error">{formErrors.releaseYear.message}</span>}
@@ -193,7 +164,7 @@ function GameFormPage() {
                                 <input
                                     type="checkbox"
                                     {...register("isCompleted")}
-                                    disabled={fetching || submitting}
+                                    disabled={loading}
                                 />
                                 <span className="checkmark">
                                     <i className='bx bx-check'></i>
@@ -211,7 +182,7 @@ function GameFormPage() {
                                 type="text"
                                 placeholder="Development studio"
                                 {...register("developer", { required: "Developer is required" })}
-                                disabled={fetching || submitting}
+                                disabled={loading}
                             />
                         </div>
                         {formErrors.developer && <span className="field-error">{formErrors.developer.message}</span>}
@@ -231,7 +202,7 @@ function GameFormPage() {
                                         message: "Please enter a valid URL"
                                     }
                                 })}
-                                disabled={fetching || submitting}
+                                disabled={loading}
                             />
                         </div>
                         {formErrors.coverImageUrl && <span className="field-error">{formErrors.coverImageUrl.message}</span>}
@@ -248,36 +219,20 @@ function GameFormPage() {
                                     required: "Description is required",
                                     minLength: { value: 10, message: "Description must be at least 10 characters" }
                                 })}
-                                disabled={fetching || submitting}
+                                disabled={loading}
                             />
                         </div>
                         {formErrors.description && <span className="field-error">{formErrors.description.message}</span>}
                     </div>
 
-                    {/* Botones de acción */}
-                    <div className="form-actions">
-                        <button 
-                            type="button"
-                            className="cancel-btn"
-                            onClick={() => navigate("/games")}
-                                disabled={submitting}
-                        >
-                            <i className='bx bx-arrow-back'></i>
-                            Cancel
-                        </button>
-                        
-                        <button 
-                            type="submit" 
-                            className="submit-btn"
-                            disabled={submitting || fetching}
-                        >
-                            <i className={isEditing ? 'bx bx-edit' : 'bx bx-plus'}></i>
-                            {loading 
-                                ? (isEditing ? "Updating Game..." : "Adding Game...") 
-                                : (isEditing ? "Update Game" : "Add to Library")
-                            }
-                        </button>
-                    </div>
+                    <button 
+                        type="submit" 
+                        className="submit-btn"
+                        disabled={loading}
+                    >
+                        <i className='bx bx-plus'></i>
+                        {loading ? "Adding Game..." : "Add to Library"}
+                    </button>
                 </form>
             </div>
         </div>
