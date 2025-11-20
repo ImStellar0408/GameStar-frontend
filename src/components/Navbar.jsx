@@ -33,7 +33,7 @@ export default function Header() {
               <Link to="/games">Games</Link>
             </li>
             <li>
-              <Link to="/add-game">Add Game</Link>
+              <Link to="/games/new">Add Game</Link>
             </li>
             <li>
               <Link to="/" onClick={handleLogout}>Log Out</Link> 

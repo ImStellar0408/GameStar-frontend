@@ -134,7 +134,7 @@ function GameCard({ game }) {
                         </div>
 
                         <div className="action-buttons">
-                            <Link to={`/games/${game._id}`} className="edit-btn">
+                            <Link to={`/games/edit/${game._id}`} className="edit-btn">
                                 <i className='bx bx-edit'></i>
                                 Edit Game
                             </Link>

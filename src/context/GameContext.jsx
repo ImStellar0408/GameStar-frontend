@@ -72,11 +72,14 @@ export function GameProvider({ children }) {
         }
     };
 
-    const updateGame = async (id, gameData) => {
+        const updateGame = async (id, gameData) => {
         try {
             setLoading(true);
             setErrors([]);
+            console.log("Updating game in context:", id, gameData);
+            
             const res = await updateGameRequest(id, gameData);
+            console.log("Update response:", res.data);
             
             setGames(prevGames => 
                 prevGames.map(game => game._id === id ? res.data : game)

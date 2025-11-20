@@ -10,7 +10,6 @@ import GameFormPage from "./pages/GameFormPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
 
 import ProtectedRoute from "./ProtectedRoute.jsx";
-
 import Navbar from "./components/Navbar.jsx";
 
 function App() {
@@ -26,11 +25,10 @@ function App() {
 
                         <Route element={<ProtectedRoute />}>
                             <Route path="/games" element={<GamePage />} />
-                            <Route path="/add-game" element={<GameFormPage />} />
-                            <Route path="/games/:id" element={<GameFormPage />} />
+                            <Route path="/games/new" element={<GameFormPage />} />
+                            <Route path="/games/edit/:id" element={<GameFormPage />} />
                             <Route path="/profile" element={<ProfilePage />} />
                         </Route>
-
                     </Routes>
                 </BrowserRouter>
             </GameProvider>
