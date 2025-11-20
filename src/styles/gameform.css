@@ -251,6 +251,74 @@
     font-size: 0.95rem;
 }
 
+/* Mensajes de error */
+.error-message {
+    color: rgba(255, 100, 100, 0.9);
+    font-size: 0.9rem;
+    background: rgba(255, 100, 100, 0.1);
+    border: 1px solid rgba(255, 100, 100, 0.2);
+    padding: 12px 16px;
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.field-error {
+    color: rgba(255, 100, 100, 0.9);
+    font-size: 0.85rem;
+    background: rgba(255, 100, 100, 0.1);
+    border: 1px solid rgba(255, 100, 100, 0.2);
+    padding: 8px 12px;
+    border-radius: 6px;
+    backdrop-filter: blur(10px);
+}
+
+/* Acciones del formulario */
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 2rem;
+    align-items: center;
+}
+
+.cancel-btn {
+    padding: 14px 24px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(10px);
+    text-decoration: none;
+    font-family: inherit;
+}
+
+.cancel-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.cancel-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+.cancel-btn i {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
 /* Botón de enviar */
 .submit-btn {
     padding: 16px 24px;
@@ -268,11 +336,11 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    margin-top: 10px;
     backdrop-filter: blur(10px);
+    flex-shrink: 0;
 }
 
-.submit-btn:hover {
+.submit-btn:hover:not(:disabled) {
     background: linear-gradient(135deg, 
         rgba(120, 119, 198, 1) 0%, 
         rgba(120, 219, 255, 0.9) 100%);
@@ -280,19 +348,138 @@
     box-shadow: 0 8px 25px rgba(120, 119, 198, 0.3);
 }
 
-.submit-btn:active {
+.submit-btn:active:not(:disabled) {
     transform: translateY(0);
 }
 
-/* Mensajes de error */
-.field-error {
-    color: rgba(255, 100, 100, 0.9);
-    font-size: 0.85rem;
-    background: rgba(255, 100, 100, 0.1);
-    border: 1px solid rgba(255, 100, 100, 0.2);
-    padding: 8px 12px;
-    border-radius: 6px;
-    backdrop-filter: blur(10px);
+.submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+.submit-btn i {
+    font-size: 1.2rem;
+}
+
+/* Estados de carga */
+.submit-btn.loading,
+.cancel-btn.loading {
+    position: relative;
+    color: transparent;
+}
+
+.submit-btn.loading::after,
+.cancel-btn.loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border: 2px solid transparent;
+    border-top: 2px solid rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.submit-btn.loading::after {
+    border-top: 2px solid white;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Efectos de borde luminoso para los botones */
+.cancel-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.cancel-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 12px;
+    padding: 1px;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.1) 0%, 
+        rgba(255, 255, 255, 0.05) 50%,
+        rgba(255, 255, 255, 0.08) 100%);
+    -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+.submit-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.submit-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 12px;
+    padding: 1px;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.3) 0%, 
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0.2) 100%);
+    -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+/* Efecto de brillo al hover */
+.submit-btn::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+    );
+    transform: rotate(45deg);
+    transition: all 0.6s ease;
+    opacity: 0;
+}
+
+.submit-btn:hover::after {
+    opacity: 1;
+    animation: shine 1.5s ease;
+}
+
+@keyframes shine {
+    0% {
+        transform: rotate(45deg) translateX(-100%);
+    }
+    100% {
+        transform: rotate(45deg) translateX(100%);
+    }
 }
 
 /* Responsive */
@@ -316,6 +503,17 @@
     .input-icon textarea {
         padding: 14px 14px 14px 44px;
     }
+    
+    .form-actions {
+        flex-direction: column-reverse;
+        gap: 12px;
+    }
+    
+    .cancel-btn,
+    .submit-btn {
+        width: 100%;
+        justify-content: center;
+    }
 }
 
 @media (max-width: 480px) {
@@ -325,6 +523,7 @@
     
     .crystal-card {
         padding: 24px 20px;
+        margin-top: 60px;
     }
     
     .card-title {
@@ -333,5 +532,19 @@
     
     .card-header i {
         font-size: 2.5rem;
+    }
+    
+    .form-actions {
+        margin-top: 1.5rem;
+    }
+    
+    .cancel-btn,
+    .submit-btn {
+        padding: 14px 20px;
+        font-size: 1rem;
+    }
+    
+    .card-icon {
+        width: 300px;
     }
 }
