@@ -1,5 +1,5 @@
-/* gamecard.css */
-.game-card {
+/* reviewcard.css */
+.review-card {
     background: rgba(255, 255, 255, 0.06);
     backdrop-filter: blur(20px) saturate(160%);
     -webkit-backdrop-filter: blur(20px) saturate(160%);
@@ -11,7 +11,7 @@
     position: relative;
 }
 
-.game-card::before {
+.review-card::before {
     content: '';
     position: absolute;
     top: 0;
@@ -35,7 +35,7 @@
     pointer-events: none;
 }
 
-.game-card:hover {
+.review-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
 }
@@ -43,68 +43,25 @@
 /* Card básica */
 .card-basic {
     cursor: pointer;
+    padding: 24px;
+}
+
+.review-header {
     display: flex;
-    gap: 16px;
-    padding: 20px;
-    align-items: center;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
 }
 
-.card-image {
-    position: relative;
-    flex-shrink: 0;
-    width: 120px;
-    height: 160px;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-}
-
-.card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.card-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.card-basic:hover .card-overlay {
-    opacity: 1;
-}
-
-.card-basic:hover .card-image img {
-    transform: scale(1.05);
-}
-
-.card-overlay i {
-    font-size: 2rem;
-    color: rgba(255, 255, 255, 0.9);
-}
-
-.card-info {
+.game-info {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
 }
 
 .game-title {
     color: rgba(255, 255, 255, 0.95);
     font-size: 1.4rem;
     font-weight: 700;
-    margin: 0;
+    margin: 0 0 8px 0;
     background: linear-gradient(135deg, #fff, #a8b1ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -113,35 +70,106 @@
 
 .game-meta {
     display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.game-genre, .game-platform {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85rem;
+    padding: 4px 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+}
+
+.review-rating {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+}
+
+.stars {
+    display: flex;
+    gap: 2px;
+}
+
+.stars i {
+    font-size: 1.1rem;
+}
+
+.rating-number {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.review-preview {
+    margin-bottom: 16px;
+}
+
+.review-text {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.5;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.review-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.review-meta {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.reviewer, .review-date {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85rem;
+}
+
+.reviewer i, .review-date i {
+    font-size: 0.9rem;
+}
+
+.review-stats {
+    display: flex;
     gap: 12px;
     align-items: center;
 }
 
-.game-year, .game-platform {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.9rem;
-    padding: 4px 12px;
+.difficulty, .hours, .recommended {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.85rem;
+    padding: 4px 10px;
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
+    border-radius: 12px;
     backdrop-filter: blur(10px);
 }
 
-.game-status .completed {
+.recommended {
     color: #4ade80;
     background: rgba(74, 222, 128, 0.1);
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 600;
 }
 
-.game-status .playing {
-    color: #60a5fa;
-    background: rgba(96, 165, 250, 0.1);
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 600;
+.hours {
+    color: rgba(255, 255, 255, 0.8);
 }
 
 /* Contenido expandido */
@@ -191,7 +219,7 @@
 .expanded-details {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 16px;
+    gap: 12px;
     margin-bottom: 24px;
 }
 
@@ -203,30 +231,38 @@
     background: rgba(255, 255, 255, 0.05);
     border-radius: 12px;
     backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.detail-group:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-1px);
 }
 
 .detail-group i {
     color: rgba(255, 255, 255, 0.6);
     font-size: 1.2rem;
+    flex-shrink: 0;
 }
 
 .detail-group span {
     color: rgba(255, 255, 255, 0.9);
     font-size: 0.95rem;
+    line-height: 1.4;
 }
 
-.expanded-description {
+.expanded-review {
     margin-bottom: 24px;
 }
 
-.expanded-description h4 {
+.expanded-review h4 {
     color: rgba(255, 255, 255, 0.9);
     font-size: 1.1rem;
     margin-bottom: 12px;
     font-weight: 600;
 }
 
-.expanded-description p {
+.expanded-review p {
     color: rgba(255, 255, 255, 0.8);
     line-height: 1.6;
     margin: 0;
@@ -234,6 +270,56 @@
     background: rgba(255, 255, 255, 0.05);
     border-radius: 12px;
     backdrop-filter: blur(10px);
+}
+
+.review-verdict {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 24px;
+    backdrop-filter: blur(10px);
+}
+
+.verdict-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.rating-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.stars-large {
+    display: flex;
+    gap: 4px;
+}
+
+.stars-large i {
+    font-size: 1.5rem;
+}
+
+.rating-text {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.recommendation {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #4ade80;
+    font-weight: 600;
+}
+
+.recommendation i {
+    font-size: 1.3rem;
 }
 
 /* Botones de acción */
@@ -287,25 +373,63 @@
     box-shadow: 0 8px 25px rgba(255, 100, 100, 0.3);
 }
 
+/* Estados de eliminación */
+.delete-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    border-radius: 16px;
+}
+
+.delete-animation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.delete-animation i {
+    font-size: 2rem;
+    color: #f87171;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.1); }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
-    .card-basic {
+    .review-header {
         flex-direction: column;
-        text-align: center;
-        gap: 16px;
+        gap: 12px;
     }
     
-    .card-image {
-        width: 140px;
-        height: 180px;
+    .review-rating {
+        align-items: flex-start;
     }
     
-    .game-meta {
-        justify-content: center;
+    .review-footer {
+        flex-direction: column;
+        align-items: flex-start;
     }
     
     .expanded-details {
         grid-template-columns: 1fr;
+    }
+    
+    .verdict-content {
+        flex-direction: column;
+        align-items: flex-start;
     }
     
     .action-buttons {
@@ -315,14 +439,13 @@
     .expanded-header {
         flex-direction: column;
         gap: 16px;
-        align-items: center;
-        text-align: center;
+        align-items: flex-start;
     }
 }
 
 @media (max-width: 480px) {
     .card-basic {
-        padding: 16px;
+        padding: 20px;
     }
     
     .expanded-content {
@@ -336,86 +459,10 @@
     .expanded-header h2 {
         font-size: 1.4rem;
     }
-}
-
-.created-date {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.8rem;
-    margin-top: 8px;
-}
-
-.created-date i {
-    font-size: 0.9rem;
-}
-
-.expanded-details {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 12px;
-    margin-bottom: 24px;
-}
-
-.detail-group {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
-}
-
-.detail-group:hover {
-    background: rgba(255, 255, 255, 0.08);
-    transform: translateY(-1px);
-}
-
-.detail-group i {
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 1.2rem;
-    flex-shrink: 0;
-}
-
-.detail-group span {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 0.95rem;
-    line-height: 1.4;
-}
-
-@media (max-width: 768px) {
-    .created-date {
-        justify-content: center;
-        text-align: center;
-    }
     
-    .expanded-details {
-        grid-template-columns: 1fr;
-    }
-    
-    .detail-group {
-        padding: 10px 14px;
+    .review-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
     }
 }
-
-@media (max-width: 480px) {
-    .created-date {
-        font-size: 0.75rem;
-    }
-    
-    .detail-group {
-        padding: 8px 12px;
-    }
-    
-    .detail-group i {
-        font-size: 1.1rem;
-    }
-    
-    .detail-group span {
-        font-size: 0.9rem;
-    }
-}
-
