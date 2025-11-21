@@ -72,20 +72,20 @@
     box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
 }
 
-/* Games Grid - AJUSTADO PARA CARDS VERTICALES */
+/* Games Grid - CARDS MÁS ALTAS */
 .games-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 24px;
     margin-bottom: 40px;
 }
 
-/* Game Card - DISEÑO VERTICAL */
+/* Game Card - MÁS ALTA PARA CARÁTULA COMPLETA */
 .game-card {
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
+    border-radius: 16px;
     padding: 0;
     overflow: hidden;
     transition: all 0.3s ease;
@@ -94,13 +94,13 @@
 }
 
 .game-card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-5px);
     background: rgba(255, 255, 255, 0.08);
     border-color: rgba(255, 255, 255, 0.2);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
-/* Card Compact - VERTICAL */
+/* Card Compact - MUCHO MÁS ALTA */
 .game-card-compact {
     cursor: pointer;
     display: flex;
@@ -110,7 +110,7 @@
 
 .card-image {
     position: relative;
-    height: 320px;
+    height: 340px; /* MUCHO MÁS ALTA para carátula completa */
     overflow: hidden;
     flex-shrink: 0;
 }
@@ -118,7 +118,7 @@
 .card-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: cover; /* Mantiene la proporción de la carátula */
     transition: transform 0.3s ease;
 }
 
@@ -156,8 +156,8 @@
     background: rgba(0, 0, 0, 0.8);
     color: rgb(5, 247, 255);
     padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
+    border-radius: 15px;
+    font-size: 0.75rem;
     font-weight: 600;
     backdrop-filter: blur(10px);
 }
@@ -168,6 +168,7 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+    min-height: 140px; /* Altura mínima para el contenido */
 }
 
 .game-info {
@@ -175,7 +176,7 @@
 }
 
 .game-info h3 {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: white;
     margin: 0 0 8px 0;
@@ -216,17 +217,20 @@
     gap: 6px;
     background: rgba(255, 255, 255, 0.1);
     padding: 6px 10px;
-    border-radius: 10px;
+    border-radius: 8px;
     font-size: 0.8rem;
     color: rgba(255, 255, 255, 0.9);
     border: 1px solid rgba(255, 255, 255, 0.2);
     flex: 1;
     min-width: 0;
     justify-content: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .meta-item i {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     flex-shrink: 0;
 }
 
@@ -573,7 +577,7 @@
     align-items: center;
     justify-content: center;
     z-index: 20;
-    border-radius: 20px;
+    border-radius: 16px;
 }
 
 .delete-animation {
@@ -690,7 +694,7 @@
     font-size: 1.1rem;
 }
 
-/* Responsive */
+/* Ajustes responsive para las cards más altas */
 @media (max-width: 768px) {
     .games-page {
         padding: 20px 16px;
@@ -715,21 +719,26 @@
     }
     
     .games-grid {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
         gap: 20px;
     }
     
     .card-image {
-        height: 280px;
+        height: 300px; /* Mantiene buena altura en tablets */
     }
     
     .game-info h3 {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
     
     .meta-item {
         font-size: 0.75rem;
         padding: 5px 8px;
+    }
+    
+    .card-content {
+        padding: 16px;
+        gap: 12px;
     }
     
     .modal-overlay {
@@ -791,11 +800,29 @@
 
 @media (max-width: 480px) {
     .games-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 16px;
     }
     
     .card-image {
-        height: 250px;
+        height: 260px; /* Buena altura en móviles */
+    }
+    
+    .game-info h3 {
+        font-size: 1rem;
+    }
+    
+    .game-developer {
+        font-size: 0.85rem;
+    }
+    
+    .meta-item {
+        font-size: 0.7rem;
+        padding: 4px 6px;
+    }
+    
+    .date-added {
+        font-size: 0.75rem;
     }
     
     .page-header {
@@ -809,5 +836,16 @@
     .action-button {
         padding: 14px 24px;
         font-size: 1rem;
+    }
+}
+
+/* Ajustes específicos para pantallas grandes */
+@media (min-width: 1400px) {
+    .games-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+    
+    .card-image {
+        height: 320px; /* Aún más alta en pantallas grandes */
     }
 }

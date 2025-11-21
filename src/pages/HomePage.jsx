@@ -86,8 +86,6 @@ export default function Home() {
                 <img className = "img3 autoDisplay" src="src\assets\download.gif" alt="" />
             </section>
 
-            <Footer />
-
         </>
     )
 }

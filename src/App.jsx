@@ -15,6 +15,7 @@ import MyReviewsPage from "./pages/MyReviewsPage.jsx";
 
 import ProtectedRoute from "./ProtectedRoute.jsx";
 import Navbar from "./components/Navbar.jsx";
+import Footer from "./components/footer.jsx";
 
 function App() {
     return (
@@ -39,6 +40,7 @@ function App() {
                                 <Route path="/reviews/edit/:id" element={<ReviewFormPage />} />
                             </Route>
                         </Routes>
+                        <Footer />
                     </BrowserRouter>
                 </ReviewProvider>
             </GameProvider>
