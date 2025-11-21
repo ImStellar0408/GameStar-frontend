@@ -18,8 +18,8 @@ export const getMyReviewsRequest = async () => {
     });
 };
 
-export const getReviewRequest = async (id) => {  // ¡Añadir esta función!
-    return await axios.get(`/reviews/${id}`, {
+export const getAvailableGamesRequest = async () => {
+    return await axios.get(`/reviews/available-games`, {
         withCredentials: true
     });
 };

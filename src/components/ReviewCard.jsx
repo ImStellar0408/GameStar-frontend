@@ -73,6 +73,15 @@ function ReviewCard({ review, isOwner = false }) {
         ));
     };
 
+    // Obtener información del juego desde gameId si está disponible
+    const gameInfo = review.gameId || {};
+    const gameTitle = gameInfo.title || review.gameTitle;
+    const gameDeveloper = gameInfo.developer || review.developer;
+    const gameGenre = gameInfo.genre || review.genre;
+    const gamePlatform = gameInfo.platform || review.platform;
+    const gameReleaseYear = gameInfo.releaseYear;
+    const gameCoverImage = gameInfo.coverImageUrl;
+
     if (isDeleted) {
         return null;
     }
@@ -84,8 +93,8 @@ function ReviewCard({ review, isOwner = false }) {
                 <div className="review-card-compact" onClick={toggleExpand}>
                     <div className="compact-header">
                         <div className="game-info">
-                            <h3 className="game-title">{review.gameTitle}</h3>
-                            <p className="game-developer">{review.developer}</p>
+                            <h3 className="game-title">{gameTitle}</h3>
+                            <p className="game-developer">{gameDeveloper}</p>
                         </div>
                         <div className="rating-display">
                             <div className="stars-compact">
@@ -98,11 +107,11 @@ function ReviewCard({ review, isOwner = false }) {
                     <div className="compact-meta">
                         <span className="meta-item">
                             <i className='bx bx-category'></i>
-                            {review.genre}
+                            {gameGenre}
                         </span>
                         <span className="meta-item">
                             <i className='bx bx-devices'></i>
-                            {review.platform}
+                            {gamePlatform}
                         </span>
                         <span className="meta-item" style={{ color: getDifficultyColor(review.difficulty) }}>
                             <i className='bx bx-trophy'></i>
@@ -163,8 +172,11 @@ function ReviewCard({ review, isOwner = false }) {
                             {/* Header */}
                             <div className="expanded-header">
                                 <div className="title-section">
-                                    <h2>{review.gameTitle}</h2>
-                                    <p className="developer">{review.developer}</p>
+                                    <h2>{gameTitle}</h2>
+                                    <p className="developer">{gameDeveloper}</p>
+                                    {gameReleaseYear && (
+                                        <p className="release-year">Released: {gameReleaseYear}</p>
+                                    )}
                                 </div>
                                 <button 
                                     className="close-button" 
@@ -202,14 +214,14 @@ function ReviewCard({ review, isOwner = false }) {
                                         <i className='bx bx-category'></i>
                                         <div>
                                             <label>Genre</label>
-                                            <span>{review.genre}</span>
+                                            <span>{gameGenre}</span>
                                         </div>
                                     </div>
                                     <div className="detail-card">
                                         <i className='bx bx-devices'></i>
                                         <div>
                                             <label>Platform</label>
-                                            <span>{review.platform}</span>
+                                            <span>{gamePlatform}</span>
                                         </div>
                                     </div>
                                     <div className="detail-card">

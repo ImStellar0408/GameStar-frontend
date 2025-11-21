@@ -177,6 +177,14 @@
     cursor: not-allowed;
 }
 
+/* Input Readonly Styles */
+.form-input[readonly] {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.7);
+    cursor: not-allowed;
+}
+
 /* Star Rating */
 .star-rating-container {
     display: flex;
@@ -289,6 +297,234 @@
     font-size: 1.1rem;
 }
 
+/* Game Preview Styles */
+.game-preview {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 20px;
+    margin-top: 16px;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.game-preview-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.game-preview-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.game-preview-header h4 {
+    color: white;
+    font-size: 1.2rem;
+    margin: 0;
+    font-weight: 600;
+}
+
+.game-year {
+    background: rgba(99, 102, 241, 0.2);
+    color: #6366f1;
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
+    margin: 0;
+}
+
+.game-preview-details {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.game-detail {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s ease;
+}
+
+.game-detail:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-1px);
+}
+
+.game-detail i {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Game Cover Styles - ACTUALIZADO PARA CONTENIDO ANIMADO */
+.game-cover {
+    margin-top: 8px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.game-cover-content {
+    position: relative;
+    width: 120px;
+    height: 150px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+    background: #000;
+}
+
+.game-cover-content:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Imágenes estáticas (JPG, PNG) */
+.game-cover-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Contenido animado (GIF, WebM, MP4) */
+.game-cover-animated {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Video específico para WebM/MP4 */
+.game-cover-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+/* Indicador de contenido animado */
+.animated-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(99, 102, 241, 0.9);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    z-index: 2;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Controls para video */
+.game-cover-content video::-webkit-media-controls {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.game-cover-content video:hover::-webkit-media-controls {
+    opacity: 1;
+}
+
+/* Loading state para contenido pesado */
+.game-cover-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.game-cover-loading i {
+    font-size: 1.5rem;
+    animation: spin 1.5s linear infinite;
+}
+
+/* Empty Games State */
+.empty-games-state {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    padding: 30px;
+    text-align: center;
+    margin-top: 16px;
+}
+
+.empty-games-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.empty-games-content i {
+    font-size: 3rem;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.empty-games-content h4 {
+    color: white;
+    font-size: 1.2rem;
+    margin: 0;
+    font-weight: 600;
+}
+
+.empty-games-content p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    margin: 0 0 16px 0;
+    text-align: center;
+    max-width: 400px;
+}
+
+.empty-games-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    color: white;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+}
+
+.empty-games-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+}
+
 /* Error Messages */
 .error-message {
     background: rgba(239, 68, 68, 0.1);
@@ -305,6 +541,18 @@
     color: #ef4444;
     font-size: 0.9rem;
     margin-top: 6px;
+    font-weight: 500;
+}
+
+/* Success Message */
+.success-message {
+    background: rgba(74, 222, 128, 0.1);
+    color: #4ade80;
+    padding: 16px 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(74, 222, 128, 0.3);
+    margin-bottom: 24px;
+    text-align: center;
     font-weight: 500;
 }
 
@@ -368,19 +616,74 @@
     filter: brightness(0) invert(1);
 }
 
+/* Loading States */
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    z-index: 10;
+}
+
+.loading-spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    color: white;
+}
+
+.loading-spinner i {
+    font-size: 2rem;
+    color: #6366f1;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Edit Badge */
+.edit-badge {
+    background: rgba(59, 130, 246, 0.2);
+    color: #3b82f6;
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    margin-left: auto;
+}
+
+/* Error Banner */
+.error-banner {
+    margin: 0 40px 24px 40px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .review-form-page {
         padding: 20px 16px;
     }
     
-    .form-header {
-        padding: 30px 24px;
+    .form-container {
+        margin-top: 80px;
     }
     
-    .header-logo {
-        width: 60px;
-        height: 60px;
+    .form-header {
+        padding: 30px 24px;
     }
     
     .header-title {
@@ -411,5 +714,205 @@
     
     .star-rating-container {
         padding: 20px;
+    }
+    
+    .game-preview-details {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .game-detail {
+        justify-content: center;
+        padding: 8px 12px;
+    }
+    
+    .game-preview-header {
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .game-year {
+        align-self: center;
+    }
+    
+    .edit-badge {
+        margin-left: auto;
+    }
+    
+    .error-banner {
+        margin: 0 24px 16px 24px;
+    }
+    
+    .game-cover-content {
+        width: 100px;
+        height: 125px;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-header {
+        padding: 24px 20px;
+    }
+    
+    .header-title {
+        font-size: 1.8rem;
+    }
+    
+    .header-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .review-form {
+        padding: 20px;
+    }
+    
+    .form-input,
+    .form-textarea {
+        padding: 14px 14px 14px 48px;
+        font-size: 0.95rem;
+    }
+    
+    .input-icon {
+        left: 14px;
+        font-size: 1.2rem;
+    }
+    
+    .star-item i {
+        font-size: 2rem;
+    }
+    
+    .btn {
+        padding: 14px 24px;
+        font-size: 1rem;
+    }
+    
+    .game-preview {
+        padding: 16px;
+    }
+    
+    .empty-games-state {
+        padding: 24px 20px;
+    }
+    
+    .empty-games-content i {
+        font-size: 2.5rem;
+    }
+    
+    .empty-games-content h4 {
+        font-size: 1.1rem;
+    }
+    
+    .game-preview-header {
+        gap: 6px;
+    }
+    
+    .game-preview-header h4 {
+        font-size: 1rem;
+    }
+    
+    .game-year {
+        font-size: 0.8rem;
+        padding: 3px 6px;
+    }
+    
+    .edit-badge {
+        font-size: 0.7rem;
+        padding: 3px 6px;
+    }
+    
+    .game-cover-content {
+        width: 90px;
+        height: 112px;
+    }
+    
+    .animated-badge {
+        font-size: 0.6rem;
+        padding: 1px 4px;
+    }
+}
+
+/* Dark mode enhancements */
+@media (prefers-color-scheme: dark) {
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+    }
+    
+    .input-wrapper select.form-input option:hover {
+        background: rgba(99, 102, 241, 0.3);
+    }
+}
+
+/* Print styles */
+@media print {
+    .review-form-page {
+        background: white;
+        color: black;
+    }
+    
+    .form-container {
+        background: white;
+        border: 1px solid #ddd;
+        box-shadow: none;
+    }
+    
+    .form-input,
+    .form-textarea {
+        background: white;
+        color: black;
+        border: 1px solid #ddd;
+    }
+    
+    .btn {
+        display: none;
+    }
+    
+    .game-cover-content {
+        display: none;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .form-input,
+    .form-textarea {
+        border-width: 2px;
+    }
+    
+    .star-item i {
+        filter: none;
+    }
+    
+    .btn {
+        border-width: 2px;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .star-item,
+    .btn,
+    .game-detail,
+    .game-cover-content {
+        transition: none;
+    }
+    
+    .loading-spinner i {
+        animation: none;
+    }
+    
+    .game-preview {
+        animation: none;
+    }
+    
+    /* Pausar animaciones automáticamente */
+    .game-cover-animated,
+    .game-cover-video {
+        animation: none;
+    }
+    
+    .game-cover-video {
+        autoplay: false;
     }
 }

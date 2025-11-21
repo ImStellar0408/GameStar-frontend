@@ -1,11 +1,13 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useState, useContext } from "react";
 import { 
     createReviewRequest, 
     getGlobalReviewsRequest, 
     getMyReviewsRequest, 
     updateReviewRequest, 
-    deleteReviewRequest 
+    deleteReviewRequest,
+    getAvailableGamesRequest
 } from "../api/reviews.js";
+import { getUserGamesRequest } from "../api/games.js";
 
 const ReviewContext = createContext();
 
@@ -15,35 +17,32 @@ export const useReview = () => {
         throw new Error("useReview must be used within a ReviewProvider");
     }
     return context;
-}
+};
 
 export function ReviewProvider({ children }) {
     const [reviews, setReviews] = useState([]);
-    const [myReviews, setMyReviews] = useState([]);
-    const [errors, setErrors] = useState([]);
+    const [availableGames, setAvailableGames] = useState([]);
+    const [userGames, setUserGames] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [errors, setErrors] = useState([]);
 
-    const createReview = async (reviewData) => {
+    const createReview = async (review) => {
         try {
             setLoading(true);
             setErrors([]);
-            console.log("Creating review with data:", reviewData);
-            const res = await createReviewRequest(reviewData);
-            console.log("Review created successfully:", res.data);
-            
-            setMyReviews(prevReviews => [...prevReviews, res.data]);
-            setReviews(prevReviews => [...prevReviews, res.data]);
-            return res.data;
+            const res = await createReviewRequest(review);
+            if (res.status === 201) {
+                setReviews(prevReviews => [res.data, ...prevReviews]);
+                return res.data;
+            }
         } catch (error) {
-            console.error("Create review error:", error);
-            console.error("Error response:", error.response?.data);
-            
-            if (error.response?.data?.error) {
+            console.error("Error creating review:", error);
+            if (error.response && error.response.data && error.response.data.error) {
                 setErrors(error.response.data.error);
-            } else if (error.response?.data?.message) {
+            } else if (error.response && error.response.data && error.response.data.message) {
                 setErrors([error.response.data.message]);
             } else {
-                setErrors(["Failed to create review. Please try again."]);
+                setErrors(["Error creating review"]);
             }
             throw error;
         } finally {
@@ -54,15 +53,21 @@ export function ReviewProvider({ children }) {
     const getGlobalReviews = async () => {
         try {
             setLoading(true);
-            console.log("Fetching global reviews...");
+            setErrors([]);
             const res = await getGlobalReviewsRequest();
-            console.log("Global reviews fetched:", res.data);
-            setReviews(res.data);
-            return res.data;
+            if (res.status === 200) {
+                setReviews(res.data);
+                return res.data;
+            }
         } catch (error) {
-            console.error("Get global reviews error:", error);
-            console.error("Error response:", error.response?.data);
-            setErrors(["Failed to load reviews."]);
+            console.error("Error getting global reviews:", error);
+            if (error.response && error.response.data && error.response.data.error) {
+                setErrors(error.response.data.error);
+            } else if (error.response && error.response.data && error.response.data.message) {
+                setErrors([error.response.data.message]);
+            } else {
+                setErrors(["Error loading reviews"]);
+            }
             throw error;
         } finally {
             setLoading(false);
@@ -72,46 +77,46 @@ export function ReviewProvider({ children }) {
     const getMyReviews = async () => {
         try {
             setLoading(true);
-            console.log("Fetching my reviews...");
+            setErrors([]);
             const res = await getMyReviewsRequest();
-            console.log("My reviews fetched:", res.data);
-            setMyReviews(res.data);
-            return res.data;
+            if (res.status === 200) {
+                setReviews(res.data);
+                return res.data;
+            }
         } catch (error) {
-            console.error("Get my reviews error:", error);
-            console.error("Error response:", error.response?.data);
-            setErrors(["Failed to load your reviews."]);
+            console.error("Error getting my reviews:", error);
+            if (error.response && error.response.data && error.response.data.error) {
+                setErrors(error.response.data.error);
+            } else if (error.response && error.response.data && error.response.data.message) {
+                setErrors([error.response.data.message]);
+            } else {
+                setErrors(["Error loading your reviews"]);
+            }
             throw error;
         } finally {
             setLoading(false);
         }
     };
 
-    const updateReview = async (id, reviewData) => {
+    const updateReview = async (id, review) => {
         try {
             setLoading(true);
             setErrors([]);
-            console.log("Updating review:", id, reviewData);
-            const res = await updateReviewRequest(id, reviewData);
-            console.log("Review updated successfully:", res.data);
-            
-            setMyReviews(prevReviews => 
-                prevReviews.map(review => review._id === id ? res.data : review)
-            );
-            setReviews(prevReviews => 
-                prevReviews.map(review => review._id === id ? res.data : review)
-            );
-            return res.data;
+            const res = await updateReviewRequest(id, review);
+            if (res.status === 200) {
+                setReviews(prevReviews => 
+                    prevReviews.map(rev => rev._id === id ? res.data : rev)
+                );
+                return res.data;
+            }
         } catch (error) {
-            console.error("Update review error:", error);
-            console.error("Error response:", error.response?.data);
-            
-            if (error.response?.data?.error) {
+            console.error("Error updating review:", error);
+            if (error.response && error.response.data && error.response.data.error) {
                 setErrors(error.response.data.error);
-            } else if (error.response?.data?.message) {
+            } else if (error.response && error.response.data && error.response.data.message) {
                 setErrors([error.response.data.message]);
             } else {
-                setErrors(["Failed to update review. Please try again."]);
+                setErrors(["Error updating review"]);
             }
             throw error;
         } finally {
@@ -122,56 +127,93 @@ export function ReviewProvider({ children }) {
     const deleteReview = async (id) => {
         try {
             setLoading(true);
-            console.log("Deleting review:", id);
-            await deleteReviewRequest(id);
-            console.log("Review deleted successfully");
-            
-            setMyReviews(prevReviews => prevReviews.filter(review => review._id !== id));
-            setReviews(prevReviews => prevReviews.filter(review => review._id !== id));
+            setErrors([]);
+            const res = await deleteReviewRequest(id);
+            if (res.status === 200) {
+                setReviews(prevReviews => prevReviews.filter(rev => rev._id !== id));
+                return res.data;
+            }
         } catch (error) {
-            console.error("Delete review error:", error);
-            console.error("Error response:", error.response?.data);
-            setErrors(["Failed to delete review."]);
+            console.error("Error deleting review:", error);
+            if (error.response && error.response.data && error.response.data.error) {
+                setErrors(error.response.data.error);
+            } else if (error.response && error.response.data && error.response.data.message) {
+                setErrors([error.response.data.message]);
+            } else {
+                setErrors(["Error deleting review"]);
+            }
             throw error;
         } finally {
             setLoading(false);
         }
     };
 
-    const getReview = async (id) => {
-    try {
-        setLoading(true);
-        // Como no hay endpoint específico, filtramos de las reviews existentes
-        const myReviews = await getMyReviewsRequest();
-        const review = myReviews.find(r => r._id === id);
-        
-        if (!review) {
-            throw new Error("Review not found");
+    const getAvailableGames = async () => {
+        try {
+            setLoading(true);
+            setErrors([]);
+            const res = await getAvailableGamesRequest();
+            if (res.status === 200) {
+                setAvailableGames(res.data);
+                return res.data;
+            }
+        } catch (error) {
+            console.error("Error getting available games:", error);
+            if (error.response && error.response.data && error.response.data.error) {
+                setErrors(error.response.data.error);
+            } else if (error.response && error.response.data && error.response.data.message) {
+                setErrors([error.response.data.message]);
+            } else {
+                setErrors(["Error loading available games"]);
+            }
+            throw error;
+        } finally {
+            setLoading(false);
         }
-        return review;
-    } catch (error) {
-        console.error("Get review error:", error);
-        setErrors(["Failed to load the review."]);
-        throw error;
-    } finally {
-        setLoading(false);
-    }
-};
+    };
 
-    const clearErrors = () => setErrors([]);
+    const getUserGames = async () => {
+        try {
+            setLoading(true);
+            setErrors([]);
+            const res = await getUserGamesRequest();
+            if (res.status === 200) {
+                setUserGames(res.data);
+                return res.data;
+            }
+        } catch (error) {
+            console.error("Error getting user games:", error);
+            if (error.response && error.response.data && error.response.data.error) {
+                setErrors(error.response.data.error);
+            } else if (error.response && error.response.data && error.response.data.message) {
+                setErrors([error.response.data.message]);
+            } else {
+                setErrors(["Error loading user games"]);
+            }
+            throw error;
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const clearErrors = () => {
+        setErrors([]);
+    };
 
     return (
-        <ReviewContext.Provider value={{ 
+        <ReviewContext.Provider value={{
             reviews,
-            myReviews,
-            errors,
+            availableGames,
+            userGames,
             loading,
+            errors,
             createReview,
-            getReview,
             getGlobalReviews,
             getMyReviews,
             updateReview,
             deleteReview,
+            getAvailableGames,
+            getUserGames,
             clearErrors
         }}>
             {children}

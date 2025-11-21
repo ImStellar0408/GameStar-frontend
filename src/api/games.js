@@ -1,33 +1,37 @@
-import axios from 'axios';
-
-const API_URL = 'http://localhost:3000/api';
+import axios from './axios';
 
 export const createGameRequest = async (gameData) => {
-    return await axios.post(`${API_URL}/games`, gameData, {
+    return await axios.post(`/games`, gameData, {
         withCredentials: true
     });
 };
 
 export const getGamesRequest = async () => {
-    return await axios.get(`${API_URL}/games`, {
+    return await axios.get(`/games`, {
+        withCredentials: true
+    });
+};
+
+export const getUserGamesRequest = async () => {
+    return await axios.get(`/user-games`, {
         withCredentials: true
     });
 };
 
 export const getGameRequest = async (id) => {
-    return await axios.get(`${API_URL}/games/${id}`, {
+    return await axios.get(`/games/${id}`, {
         withCredentials: true
     });
 }
 
 export const updateGameRequest = async (id, gameData) => {
-    return await axios.put(`${API_URL}/games/${id}`, gameData, {
+    return await axios.put(`/games/${id}`, gameData, {
         withCredentials: true
     });
 };
 
 export const deleteGameRequest = async (id) => {
-    return await axios.delete(`${API_URL}/games/${id}`, {
+    return await axios.delete(`/games/${id}`, {
         withCredentials: true
     });
 };
