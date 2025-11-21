@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import '../styles/gamepage.css';
 import { useGame } from '../context/GameContext';
 import { Link } from 'react-router-dom';
@@ -7,8 +7,25 @@ function GameCard({ game }) {
     const [isExpanded, setIsExpanded] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
     const [isDeleted, setIsDeleted] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
+    const videoRef = useRef(null);
 
     const { deleteGame } = useGame();
+
+    // Detectar si la carátula es un video
+    const isVideoCover = game.coverImageUrl?.match(/\.(mp4|webm|ogg)$/i);
+    const isAnimatedImage = game.coverImageUrl?.match(/\.(gif|webp)$/i);
+
+    useEffect(() => {
+        if (isVideoCover && videoRef.current) {
+            if (isHovered || isExpanded) {
+                videoRef.current.play().catch(console.error);
+            } else {
+                videoRef.current.pause();
+                videoRef.current.currentTime = 0;
+            }
+        }
+    }, [isHovered, isExpanded, isVideoCover]);
 
     const handleDeleteGame = async (id) => {
         setIsDeleting(true);
@@ -45,17 +62,53 @@ function GameCard({ game }) {
 
     return (
         <>
-            {/* Card Normal - DISEÑO VERTICAL */}
+            {/* Card Normal */}
             <div className="game-card">
-                <div className="game-card-compact" onClick={toggleExpand}>
+                <div 
+                    className="game-card-compact" 
+                    onClick={toggleExpand}
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                >
                     <div className="card-image">
-                        <img src={game.coverImageUrl} alt={game.title} />
+                        {/* Renderizado condicional para diferentes tipos de carátula */}
+                        {isVideoCover ? (
+                            <video
+                                ref={videoRef}
+                                src={game.coverImageUrl}
+                                muted
+                                loop
+                                playsInline
+                                className="cover-media"
+                                poster={game.coverImageUrl.replace(/\.(mp4|webm|ogg)$/i, '.jpg')} // Fallback image
+                            />
+                        ) : isAnimatedImage ? (
+                            <img 
+                                src={game.coverImageUrl} 
+                                alt={game.title}
+                                className="cover-media animated-cover"
+                            />
+                        ) : (
+                            <img 
+                                src={game.coverImageUrl} 
+                                alt={game.title}
+                                className="cover-media"
+                            />
+                        )}
+                        
                         <div className="card-overlay">
                             <i className='bx bx-expand'></i>
                         </div>
                         <div className="status-badge">
                             {game.isCompleted ? '✓ Completed' : '▶ Playing'}
                         </div>
+                        
+                        {/* Indicador de contenido animado */}
+                        {(isVideoCover || isAnimatedImage) && (
+                            <div className="animated-indicator">
+                                <i className='bx bx-play-circle'></i>
+                            </div>
+                        )}
                     </div>
                     
                     <div className="card-content">
@@ -92,7 +145,6 @@ function GameCard({ game }) {
                     </div>
                 </div>
 
-                {/* Overlay de eliminación */}
                 {isDeleting && (
                     <div className="delete-overlay">
                         <div className="delete-animation">
@@ -103,12 +155,16 @@ function GameCard({ game }) {
                 )}
             </div>
 
-            {/* Modal Expandido (se mantiene igual) */}
+            {/* Modal Expandido */}
             {isExpanded && (
                 <div className="modal-overlay" onClick={() => setIsExpanded(false)}>
-                    <div className="game-card-expanded" onClick={(e) => e.stopPropagation()}>
+                    <div 
+                        className="game-card-expanded" 
+                        onClick={(e) => e.stopPropagation()}
+                        onMouseEnter={() => setIsHovered(true)}
+                        onMouseLeave={() => setIsHovered(false)}
+                    >
                         <div className="expanded-container">
-                            {/* Header */}
                             <div className="expanded-header">
                                 <div className="title-section">
                                     <h2>{game.title}</h2>
@@ -122,12 +178,34 @@ function GameCard({ game }) {
                                 </button>
                             </div>
 
-                            {/* Contenido Principal */}
                             <div className="expanded-content">
-                                {/* Imagen y Info Principal */}
+                                {/* Imagen/Video Principal en el Modal */}
                                 <div className="main-info-section">
                                     <div className="game-image">
-                                        <img src={game.coverImageUrl} alt={game.title} />
+                                        {isVideoCover ? (
+                                            <video
+                                                ref={videoRef}
+                                                src={game.coverImageUrl}
+                                                muted
+                                                loop
+                                                playsInline
+                                                autoPlay
+                                                className="cover-media expanded-media"
+                                                poster={game.coverImageUrl.replace(/\.(mp4|webm|ogg)$/i, '.jpg')}
+                                            />
+                                        ) : isAnimatedImage ? (
+                                            <img 
+                                                src={game.coverImageUrl} 
+                                                alt={game.title}
+                                                className="cover-media expanded-media animated-cover"
+                                            />
+                                        ) : (
+                                            <img 
+                                                src={game.coverImageUrl} 
+                                                alt={game.title}
+                                                className="cover-media expanded-media"
+                                            />
+                                        )}
                                         <div className="status-tag">
                                             {game.isCompleted ? '✓ Completed' : '▶ In Progress'}
                                         </div>
@@ -157,7 +235,7 @@ function GameCard({ game }) {
                                     </div>
                                 </div>
 
-                                {/* Grid de Detalles */}
+                                {/* Resto del contenido del modal se mantiene igual */}
                                 <div className="details-grid">
                                     <div className="detail-card">
                                         <i className='bx bx-building'></i>
@@ -191,7 +269,6 @@ function GameCard({ game }) {
                                     </div>
                                 </div>
 
-                                {/* Description */}
                                 <div className="description-section">
                                     <h4>Description</h4>
                                     <div className="description-content">
@@ -199,7 +276,6 @@ function GameCard({ game }) {
                                     </div>
                                 </div>
 
-                                {/* Botones de Acción */}
                                 <div className="action-buttons">
                                     <Link to={`/games/edit/${game._id}`} className="action-btn edit-btn">
                                         <i className='bx bx-edit'></i>

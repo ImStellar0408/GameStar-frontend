@@ -21,9 +21,9 @@ function GameFormPage() {
                 try {
                     setIsEditing(true);
                     setFormLoading(true);
-                    
+
                     const game = await getGame(params.id);
-                    
+
                     setValue("title", game.title);
                     setValue("genre", game.genre);
                     setValue("platform", game.platform);
@@ -32,7 +32,7 @@ function GameFormPage() {
                     setValue("coverImageUrl", game.coverImageUrl);
                     setValue("description", game.description);
                     setValue("isCompleted", game.isCompleted);
-                    
+
                 } catch (error) {
                     console.error("Error loading game:", error);
                     navigate("/games");
@@ -51,26 +51,26 @@ function GameFormPage() {
     const onSubmit = handleSubmit(async (data) => {
         try {
             setFormLoading(true);
-            
+
             const gameDataToSend = {
                 title: data.title,
                 genre: data.genre,
                 platform: data.platform,
                 releaseYear: Number(data.releaseYear),
                 developer: data.developer,
-                coverImageUrl: data.coverImageUrl, 
+                coverImageUrl: data.coverImageUrl,
                 description: data.description,
-                isCompleted: Boolean(data.isCompleted) 
+                isCompleted: Boolean(data.isCompleted)
             };
-            
+
             if (isEditing && params.id) {
                 await updateGame(params.id, gameDataToSend);
             } else {
                 await createGame(gameDataToSend);
             }
-            
+
             navigate("/games");
-             
+
         } catch (error) {
             console.log("Error:", error);
         } finally {
@@ -90,13 +90,13 @@ function GameFormPage() {
                         </div>
                     </div>
                 </div>
-                
+
                 {gameErrors.map((error, i) => (
                     <div key={i} className="error-message">
                         {error}
                     </div>
                 ))}
-                
+
                 <form className="game-form" onSubmit={onSubmit}>
                     <div className="form-grid">
                         {/* Title */}
@@ -195,7 +195,7 @@ function GameFormPage() {
                                     placeholder="Release year"
                                     min="1950"
                                     max={new Date().getFullYear() + 2}
-                                    {...register("releaseYear", { 
+                                    {...register("releaseYear", {
                                         required: "Release year is required",
                                         min: { value: 1950, message: "Year must be after 1950" },
                                         max: { value: new Date().getFullYear() + 2, message: "Year cannot be too far in the future" }
@@ -229,15 +229,21 @@ function GameFormPage() {
                     {/* Cover Image */}
                     <div className="form-section">
                         <div className="input-wrapper">
-                            <i className='bx bx-image input-icon'></i>
+                            <i className='bx bx-movie-play input-icon'></i>
                             <input
                                 type="url"
-                                placeholder="Cover image URL"
+                                placeholder="Cover image URL (JPG, PNG, WebP, GIF, MP4, WebM)"
                                 {...register("coverImageUrl", {
                                     required: "Cover image is required",
                                     pattern: {
                                         value: /^https?:\/\/.+\..+/,
                                         message: "Please enter a valid URL"
+                                    },
+                                    validate: {
+                                        supportedFormat: (value) => {
+                                            const supported = /\.(jpg|jpeg|png|gif|webp|mp4|webm|ogg)$/i;
+                                            return supported.test(value) || "Formato no soportado. Use JPG, PNG, WebP, GIF, MP4 o WebM";
+                                        }
                                     }
                                 })}
                                 disabled={formLoading}
@@ -245,6 +251,10 @@ function GameFormPage() {
                             />
                         </div>
                         {formErrors.coverImageUrl && <span className="field-error">{formErrors.coverImageUrl.message}</span>}
+                        <div className="format-hint">
+                            <i className='bx bx-info-circle'></i>
+                            Soporta: Imágenes (JPG, PNG, WebP) y Videos (MP4, WebM, OGG)
+                        </div>
                     </div>
 
                     {/* Description */}
@@ -254,7 +264,7 @@ function GameFormPage() {
                             <textarea
                                 rows="4"
                                 placeholder="Describe the game, your experience or why you're adding it..."
-                                {...register("description", { 
+                                {...register("description", {
                                     required: "Description is required",
                                     minLength: { value: 10, message: "Description must be at least 10 characters" }
                                 })}
@@ -267,7 +277,7 @@ function GameFormPage() {
 
                     {/* Action Buttons */}
                     <div className="form-actions">
-                        <button 
+                        <button
                             type="button"
                             className="btn btn-secondary"
                             onClick={() => navigate("/games")}
@@ -276,15 +286,15 @@ function GameFormPage() {
                             <i className='bx bx-arrow-back'></i>
                             Cancel
                         </button>
-                        
-                        <button 
-                            type="submit" 
+
+                        <button
+                            type="submit"
                             className="btn btn-primary"
                             disabled={formLoading}
                         >
                             <i className={isEditing ? 'bx bx-edit' : 'bx bx-plus'}></i>
-                            {formLoading 
-                                ? (isEditing ? "Updating..." : "Adding...") 
+                            {formLoading
+                                ? (isEditing ? "Updating..." : "Adding...")
                                 : (isEditing ? "Update Game" : "Add to Library")
                             }
                         </button>

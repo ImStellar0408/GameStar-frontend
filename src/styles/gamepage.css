@@ -849,3 +849,68 @@
         height: 320px; /* Aún más alta en pantallas grandes */
     }
 }
+
+/* Estilos para carátulas animadas */
+.cover-media {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.3s ease;
+}
+
+.cover-media video {
+    object-fit: cover;
+}
+
+.animated-cover {
+    /* Estilos específicos para WebP/GIF animados */
+    image-rendering: high-quality;
+}
+
+.expanded-media {
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Indicador de contenido animado */
+.animated-indicator {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    color: #4ade80;
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 0.7rem;
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.animated-indicator i {
+    font-size: 0.8rem;
+}
+
+/* Efectos de hover para videos */
+.game-card:hover .cover-media video {
+    transform: scale(1.05);
+}
+
+/* Asegurar que los videos se reproduzcan correctamente */
+video.cover-media {
+    background: #000;
+}
+
+/* Loading state para videos */
+.video-loading {
+    background: linear-gradient(45deg, #333, #555, #333);
+    background-size: 200% 200%;
+    animation: loadingShimmer 1.5s infinite;
+}
+
+@keyframes loadingShimmer {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}

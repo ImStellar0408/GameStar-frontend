@@ -335,3 +335,16 @@
         padding: 14px 14px 14px 44px;
     }
 }
+
+.format-hint {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.format-hint i {
+    font-size: 1rem;
+}
