@@ -913,6 +913,6 @@
     }
     
     .game-cover-video {
-        autoplay: false;
+        fallback: false;
     }
 }
