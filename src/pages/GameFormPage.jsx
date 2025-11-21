@@ -84,6 +84,7 @@ function GameFormPage() {
                 <div className="form-header">
                     <div className="header-content">
                         <div className="header-text">
+                            <img className="header-logo" src="../src/assets/gamestar.svg" alt="logo" />
                             <h1>{isEditing ? "Edit Game" : "Add Video Game"}</h1>
                             <p>{isEditing ? "Update your game information" : "Register your gaming adventures"}</p>
                         </div>
