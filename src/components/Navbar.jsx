@@ -131,9 +131,6 @@ export default function Header() {
         ) : (
           <>
             <li>
-              <Link to="/games">Games</Link>
-            </li>
-            <li>
               <Link to="/login">Log In</Link>
             </li>
             <li>

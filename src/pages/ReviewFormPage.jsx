@@ -115,7 +115,6 @@ function ReviewFormPage() {
             <div className="form-container">
                 <div className="form-header">
                     <div className="header-content">
-                        <img className="header-logo" src="../src/assets/GameStar.svg" alt="Game Star" />
                         <h1 className="header-title">
                             {isEditing ? "Edit Review" : "Write a Review"}
                         </h1>
@@ -166,6 +165,7 @@ function ReviewFormPage() {
                                     <option value="Racing">Racing</option>
                                     <option value="Shooter">Shooter</option>
                                     <option value="Indie">Indie</option>
+                                    <option value="Metroidvania">Metroidvania</option>
                                     <option value="Simulation">Simulation</option>
                                     <option value="Horror">Horror</option>
                                     <option value="Platformer">Platformer</option>

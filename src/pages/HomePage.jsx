@@ -1,8 +1,8 @@
-import Header from '../components/Navbar'
 import InfoCard from '../components/info-card'
-import Footer from '../components/footer'
 import '../styles/home.css'
 import 'boxicons'
+import { Link } from 'react-router-dom'
+
 
 export default function Home() {
     return (
@@ -16,7 +16,7 @@ export default function Home() {
                     <div className="hero-info-1">
                         <h1>THE NEW WAY TO WATCH YOUR GAME PROGRESS</h1>
                         <p>An innovative platform that will allow you to keep track of your favorite games.</p>
-                        <button>START</button>
+                        <Link to="/login"><button>START</button></Link>
                     </div>
 
                     <div className="hero-info-2">
@@ -80,7 +80,7 @@ export default function Home() {
                 <div className="autoBlur">
                     <h1>JOIN GAMESTART AND START PLAYING AT ANOTHER LEVEL!</h1>
                 </div>
-                <button>GET STARTED</button>
+                <Link to="/login"><button>GET STARTED</button></Link>
                 <img className = "img1 autoDisplay" src="src\assets\hx2er6ahcrv11.gif" alt="" />
                 <img className = "img2 autoDisplay" src="src\assets\0dgpicu0tru61.gif" alt="" />
                 <img className = "img3 autoDisplay" src="src\assets\download.gif" alt="" />

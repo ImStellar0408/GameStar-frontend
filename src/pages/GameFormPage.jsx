@@ -84,7 +84,6 @@ function GameFormPage() {
                 <div className="form-header">
                     <div className="header-content">
                         <div className="header-text">
-                            <img className="header-logo" src="../src/assets/gamestar.svg" alt="logo" />
                             <h1>{isEditing ? "Edit Game" : "Add Video Game"}</h1>
                             <p>{isEditing ? "Update your game information" : "Register your gaming adventures"}</p>
                         </div>
@@ -131,6 +130,7 @@ function GameFormPage() {
                                     <option value="Sports">Sports</option>
                                     <option value="Racing">Racing</option>
                                     <option value="Shooter">Shooter</option>
+                                    <option value="Metroidvania">Metroidvania</option>
                                     <option value="Indie">Indie</option>
                                     <option value="Simulation">Simulation</option>
                                     <option value="Horror">Horror</option>
@@ -163,7 +163,7 @@ function GameFormPage() {
                                     <option value="Nintendo Switch">Nintendo Switch</option>
                                     <option value="Mobile">Mobile</option>
                                     <option value="Nintendo 3DS">Nintendo 3DS</option>
-                                    <option value="Varios">Varios</option>
+                                    <option value="Multiple">Multiple</option>
                                 </select>
                             </div>
                             {formErrors.platform && <span className="field-error">{formErrors.platform.message}</span>}
@@ -242,7 +242,7 @@ function GameFormPage() {
                                     validate: {
                                         supportedFormat: (value) => {
                                             const supported = /\.(jpg|jpeg|png|gif|webp|mp4|webm|ogg)$/i;
-                                            return supported.test(value) || "Formato no soportado. Use JPG, PNG, WebP, GIF, MP4 o WebM";
+                                            return supported.test(value) || "Format not supported. Use JPG, PNG, WebP, GIF, MP4 or WebM";
                                         }
                                     }
                                 })}
@@ -253,7 +253,7 @@ function GameFormPage() {
                         {formErrors.coverImageUrl && <span className="field-error">{formErrors.coverImageUrl.message}</span>}
                         <div className="format-hint">
                             <i className='bx bx-info-circle'></i>
-                            Soporta: Imágenes (JPG, PNG, WebP) y Videos (MP4, WebM, OGG)
+                            Support: Images (JPG, PNG, WebP) and Videos (MP4, WebM, OGG)
                         </div>
                     </div>
 

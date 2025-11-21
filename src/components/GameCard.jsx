@@ -12,18 +12,12 @@ function GameCard({ game }) {
 
     const { deleteGame } = useGame();
 
-    // Detectar si la carátula es un video
     const isVideoCover = game.coverImageUrl?.match(/\.(mp4|webm|ogg)$/i);
     const isAnimatedImage = game.coverImageUrl?.match(/\.(gif|webp)$/i);
 
     useEffect(() => {
         if (isVideoCover && videoRef.current) {
-            if (isHovered || isExpanded) {
-                videoRef.current.play().catch(console.error);
-            } else {
-                videoRef.current.pause();
-                videoRef.current.currentTime = 0;
-            }
+            videoRef.current.play().catch(console.error);
         }
     }, [isHovered, isExpanded, isVideoCover]);
 
@@ -79,6 +73,7 @@ function GameCard({ game }) {
                                 muted
                                 loop
                                 playsInline
+                                autoPlay
                                 className="cover-media"
                                 poster={game.coverImageUrl.replace(/\.(mp4|webm|ogg)$/i, '.jpg')} // Fallback image
                             />
@@ -86,6 +81,7 @@ function GameCard({ game }) {
                             <img 
                                 src={game.coverImageUrl} 
                                 alt={game.title}
+                                autoPlay
                                 className="cover-media animated-cover"
                             />
                         ) : (
