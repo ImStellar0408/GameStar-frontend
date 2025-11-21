@@ -1,11 +1,11 @@
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-import '../styles/gameform.css'
+import '../styles/gameform.css';
 import { useGame } from "../context/GameContext";
 import { useEffect, useState } from "react";
 
 function GameFormPage() {
-    const { register, handleSubmit, formState: { errors: formErrors }, setValue, reset } = useForm();
+    const { register, handleSubmit, formState: { errors: formErrors }, setValue, watch } = useForm();
     const { createGame, updateGame, errors: gameErrors, getGame } = useGame();
     const navigate = useNavigate();
     const params = useParams();
@@ -13,19 +13,17 @@ function GameFormPage() {
     const [formLoading, setFormLoading] = useState(false);
     const [initialLoad, setInitialLoad] = useState(true);
 
+    const isCompletedValue = watch("isCompleted", false);
+
     useEffect(() => {
-        // Solo ejecutar si hay un ID y es la carga inicial
         if (params.id && initialLoad) {
             async function loadGame() {
                 try {
                     setIsEditing(true);
                     setFormLoading(true);
-                    console.log("Loading game for editing:", params.id);
                     
                     const game = await getGame(params.id);
-                    console.log("Game loaded:", game);
                     
-                    // Usar setValue en lugar de reset para evitar re-renders
                     setValue("title", game.title);
                     setValue("genre", game.genre);
                     setValue("platform", game.platform);
@@ -45,7 +43,6 @@ function GameFormPage() {
             }
             loadGame();
         } else if (!params.id) {
-            // Modo creación - asegurar que no estamos en modo edición
             setIsEditing(false);
             setInitialLoad(false);
         }
@@ -54,7 +51,6 @@ function GameFormPage() {
     const onSubmit = handleSubmit(async (data) => {
         try {
             setFormLoading(true);
-            console.log("Datos del formulario:", data);
             
             const gameDataToSend = {
                 title: data.title,
@@ -67,24 +63,16 @@ function GameFormPage() {
                 isCompleted: Boolean(data.isCompleted) 
             };
             
-            console.log("Datos convertidos:", gameDataToSend);
-            console.log("Is editing:", isEditing);
-            
             if (isEditing && params.id) {
-                console.log("Updating game with ID:", params.id);
                 await updateGame(params.id, gameDataToSend);
-                console.log("Game updated successfully");
             } else {
-                console.log("Creating new game");
                 await createGame(gameDataToSend);
-                console.log("Game created successfully");
             }
             
             navigate("/games");
              
         } catch (error) {
-            console.log("Error completo:", error);
-            console.log("Respuesta del error:", error.response?.data);
+            console.log("Error:", error);
         } finally {
             setFormLoading(false);
         }
@@ -92,18 +80,16 @@ function GameFormPage() {
 
     return (
         <div className="game-form-page">
-            <div className="crystal-card">
-                <div className="card-header">
-                    <img className="card-icon" src="../src/assets/GameStar.svg" alt="Game Star" />
-                    <h1 className="card-title">
-                        {isEditing ? "Edit Video Game" : "Add Video Game"}
-                    </h1>
-                    <p className="card-subtitle">
-                        {isEditing ? "Update your game information" : "Register your gaming adventures"}
-                    </p>
+            <div className="form-container">
+                <div className="form-header">
+                    <div className="header-content">
+                        <div className="header-text">
+                            <h1>{isEditing ? "Edit Game" : "Add Video Game"}</h1>
+                            <p>{isEditing ? "Update your game information" : "Register your gaming adventures"}</p>
+                        </div>
+                    </div>
                 </div>
                 
-                {/* Mostrar errores del backend */}
                 {gameErrors.map((error, i) => (
                     <div key={i} className="error-message">
                         {error}
@@ -111,78 +97,98 @@ function GameFormPage() {
                 ))}
                 
                 <form className="game-form" onSubmit={onSubmit}>
-                    {/* Title */}
-                    <div className="form-group">
-                        <div className="input-icon">
-                            <i className='bx bx-rename'></i>
-                            <input
-                                type="text"
-                                placeholder="Game title"
-                                {...register("title", { required: "Title is required" })}
-                                disabled={formLoading}
-                            />
+                    <div className="form-grid">
+                        {/* Title */}
+                        <div className="form-group">
+                            <div className="input-wrapper">
+                                <i className='bx bx-rename input-icon'></i>
+                                <input
+                                    type="text"
+                                    placeholder="Game title"
+                                    {...register("title", { required: "Title is required" })}
+                                    disabled={formLoading}
+                                    className="form-input"
+                                />
+                            </div>
+                            {formErrors.title && <span className="field-error">{formErrors.title.message}</span>}
                         </div>
-                        {formErrors.title && <span className="field-error">{formErrors.title.message}</span>}
-                    </div>
 
-                    {/* Genre */}
-                    <div className="form-group">
-                        <div className="input-icon">
-                            <i className='bx bx-category'></i>
-                            <select
-                                {...register("genre", { required: "Genre is required" })}
-                                disabled={formLoading}
-                            >
-                                <option value="">Select genre</option>
-                                <option value="Action">Action</option>
-                                <option value="Adventure">Adventure</option>
-                                <option value="RPG">RPG</option>
-                                <option value="Strategy">Strategy</option>
-                                <option value="Sports">Sports</option>
-                                <option value="Racing">Racing</option>
-                                <option value="Shooter">Shooter</option>
-                                <option value="Indie">Indie</option>
-                                <option value="Simulation">Simulation</option>
-                                <option value="Horror">Horror</option>
-                            </select>
+                        {/* Genre */}
+                        <div className="form-group">
+                            <div className="input-wrapper">
+                                <i className='bx bx-category input-icon'></i>
+                                <select
+                                    {...register("genre", { required: "Genre is required" })}
+                                    disabled={formLoading}
+                                    className="form-input"
+                                >
+                                    <option value="">Select genre</option>
+                                    <option value="Action">Action</option>
+                                    <option value="Adventure">Adventure</option>
+                                    <option value="RPG">RPG</option>
+                                    <option value="Strategy">Strategy</option>
+                                    <option value="Sports">Sports</option>
+                                    <option value="Racing">Racing</option>
+                                    <option value="Shooter">Shooter</option>
+                                    <option value="Indie">Indie</option>
+                                    <option value="Simulation">Simulation</option>
+                                    <option value="Horror">Horror</option>
+                                </select>
+                            </div>
+                            {formErrors.genre && <span className="field-error">{formErrors.genre.message}</span>}
                         </div>
-                        {formErrors.genre && <span className="field-error">{formErrors.genre.message}</span>}
-                    </div>
 
-                    {/* Platform */}
-                    <div className="form-group">
-                        <div className="input-icon">
-                            <i className='bx bx-devices'></i>
-                            <select
-                                {...register("platform", { required: "Platform is required" })}
-                                disabled={formLoading}
-                            >
-                                <option value="">Select platform</option>
-                                <option value="PC">PC</option>
-                                <option value="PlayStation 5">PlayStation 5</option>
-                                <option value="PlayStation 4">PlayStation 4</option>
-                                <option value="PlayStation 3">PlayStation 3</option>
-                                <option value="PlayStation 2">PlayStation 2</option>
-                                <option value="PlayStation 1">PlayStation 1</option>
-                                <option value="PS Vita">PS Vita</option>
-                                <option value="Xbox Series X/S">Xbox Series X/S</option>
-                                <option value="Xbox One">Xbox One</option>
-                                <option value="Xbox 360">Xbox 360</option>
-                                <option value="Xbox Classic">Xbox Classic</option>
-                                <option value="Nintendo Switch">Nintendo Switch</option>
-                                <option value="Mobile">Mobile</option>
-                                <option value="Nintendo 3DS">Nintendo 3DS</option>
-                                <option value="Varios">Varios</option>
-                            </select>
+                        {/* Platform */}
+                        <div className="form-group">
+                            <div className="input-wrapper">
+                                <i className='bx bx-devices input-icon'></i>
+                                <select
+                                    {...register("platform", { required: "Platform is required" })}
+                                    disabled={formLoading}
+                                    className="form-input"
+                                >
+                                    <option value="">Select platform</option>
+                                    <option value="PC">PC</option>
+                                    <option value="PlayStation 5">PlayStation 5</option>
+                                    <option value="PlayStation 4">PlayStation 4</option>
+                                    <option value="PlayStation 3">PlayStation 3</option>
+                                    <option value="PlayStation 2">PlayStation 2</option>
+                                    <option value="PlayStation 1">PlayStation 1</option>
+                                    <option value="PS Vita">PS Vita</option>
+                                    <option value="Xbox Series X/S">Xbox Series X/S</option>
+                                    <option value="Xbox One">Xbox One</option>
+                                    <option value="Xbox 360">Xbox 360</option>
+                                    <option value="Xbox Classic">Xbox Classic</option>
+                                    <option value="Nintendo Switch">Nintendo Switch</option>
+                                    <option value="Mobile">Mobile</option>
+                                    <option value="Nintendo 3DS">Nintendo 3DS</option>
+                                    <option value="Varios">Varios</option>
+                                </select>
+                            </div>
+                            {formErrors.platform && <span className="field-error">{formErrors.platform.message}</span>}
                         </div>
-                        {formErrors.platform && <span className="field-error">{formErrors.platform.message}</span>}
+
+                        {/* Developer */}
+                        <div className="form-group">
+                            <div className="input-wrapper">
+                                <i className='bx bx-building input-icon'></i>
+                                <input
+                                    type="text"
+                                    placeholder="Development studio"
+                                    {...register("developer", { required: "Developer is required" })}
+                                    disabled={formLoading}
+                                    className="form-input"
+                                />
+                            </div>
+                            {formErrors.developer && <span className="field-error">{formErrors.developer.message}</span>}
+                        </div>
                     </div>
 
                     <div className="form-row">
                         {/* Release Year */}
                         <div className="form-group">
-                            <div className="input-icon">
-                                <i className='bx bx-calendar'></i>
+                            <div className="input-wrapper">
+                                <i className='bx bx-calendar input-icon'></i>
                                 <input
                                     type="number"
                                     placeholder="Release year"
@@ -194,6 +200,7 @@ function GameFormPage() {
                                         max: { value: new Date().getFullYear() + 2, message: "Year cannot be too far in the future" }
                                     })}
                                     disabled={formLoading}
+                                    className="form-input"
                                 />
                             </div>
                             {formErrors.releaseYear && <span className="field-error">{formErrors.releaseYear.message}</span>}
@@ -201,38 +208,27 @@ function GameFormPage() {
 
                         {/* Completed */}
                         <div className="form-group">
-                            <label className="checkbox-container">
-                                <input
-                                    type="checkbox"
-                                    {...register("isCompleted")}
-                                    disabled={formLoading}
-                                />
-                                <span className="checkmark">
-                                    <i className='bx bx-check'></i>
-                                </span>
-                                <span className="checkbox-label">Completed</span>
-                            </label>
+                            <div className="checkbox-wrapper">
+                                <label className="checkbox-container">
+                                    <input
+                                        type="checkbox"
+                                        {...register("isCompleted")}
+                                        disabled={formLoading}
+                                        className="checkbox-input"
+                                    />
+                                    <span className="checkbox-custom">
+                                        <i className='bx bx-check'></i>
+                                    </span>
+                                    <span className="checkbox-label">Completed</span>
+                                </label>
+                            </div>
                         </div>
-                    </div>
-
-                    {/* Developer */}
-                    <div className="form-group">
-                        <div className="input-icon">
-                            <i className='bx bx-building'></i>
-                            <input
-                                type="text"
-                                placeholder="Development studio"
-                                {...register("developer", { required: "Developer is required" })}
-                                disabled={formLoading}
-                            />
-                        </div>
-                        {formErrors.developer && <span className="field-error">{formErrors.developer.message}</span>}
                     </div>
 
                     {/* Cover Image */}
-                    <div className="form-group">
-                        <div className="input-icon">
-                            <i className='bx bx-image'></i>
+                    <div className="form-section">
+                        <div className="input-wrapper">
+                            <i className='bx bx-image input-icon'></i>
                             <input
                                 type="url"
                                 placeholder="Cover image URL"
@@ -244,15 +240,16 @@ function GameFormPage() {
                                     }
                                 })}
                                 disabled={formLoading}
+                                className="form-input"
                             />
                         </div>
                         {formErrors.coverImageUrl && <span className="field-error">{formErrors.coverImageUrl.message}</span>}
                     </div>
 
                     {/* Description */}
-                    <div className="form-group">
-                        <div className="input-icon textarea-icon">
-                            <i className='bx bx-text'></i>
+                    <div className="form-section">
+                        <div className="input-wrapper">
+                            <i className='bx bx-text textarea-icon'></i>
                             <textarea
                                 rows="4"
                                 placeholder="Describe the game, your experience or why you're adding it..."
@@ -261,16 +258,17 @@ function GameFormPage() {
                                     minLength: { value: 10, message: "Description must be at least 10 characters" }
                                 })}
                                 disabled={formLoading}
+                                className="form-textarea"
                             />
                         </div>
                         {formErrors.description && <span className="field-error">{formErrors.description.message}</span>}
                     </div>
 
-                    {/* Botones de acción */}
+                    {/* Action Buttons */}
                     <div className="form-actions">
                         <button 
                             type="button"
-                            className="cancel-btn"
+                            className="btn btn-secondary"
                             onClick={() => navigate("/games")}
                             disabled={formLoading}
                         >
@@ -280,12 +278,12 @@ function GameFormPage() {
                         
                         <button 
                             type="submit" 
-                            className="submit-btn"
+                            className="btn btn-primary"
                             disabled={formLoading}
                         >
                             <i className={isEditing ? 'bx bx-edit' : 'bx bx-plus'}></i>
                             {formLoading 
-                                ? (isEditing ? "Updating Game..." : "Adding Game...") 
+                                ? (isEditing ? "Updating..." : "Adding...") 
                                 : (isEditing ? "Update Game" : "Add to Library")
                             }
                         </button>
