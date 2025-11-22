@@ -419,8 +419,8 @@ function GamePage() {
                                     className="filter-select"
                                 >
                                     <option value="">All Status</option>
-                                    <option value="completed">✅ Completed</option>
-                                    <option value="playing">🎮 In Progress</option>
+                                    <option value="completed">Completed</option>
+                                    <option value="playing">In Progress</option>
                                 </select>
                             </div>
                         </div>
