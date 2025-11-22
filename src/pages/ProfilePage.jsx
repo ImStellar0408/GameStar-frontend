@@ -37,10 +37,6 @@ function ProfilePage() {
                         <p className="profile-email">{user?.email}</p>
                         <div className="profile-meta">
                             <span className="meta-item">
-                                <i className='bx bx-calendar'></i>
-                                Member since {new Date(user?.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}
-                            </span>
-                            <span className="meta-item">
                                 <i className='bx bx-id-card'></i>
                                 User ID: {user?.id}
                             </span>
