@@ -1,6 +1,11 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { useAuth } from "./AuthContext";
-import { getUserStatsRequest } from "../api/stats.js";
+import { 
+    getUserStatsRequest, 
+    getReviewStatsRequest, 
+    getGameStatsRequest, 
+    getMonthlyActivityRequest 
+} from "../api/stats.js";
 
 const ProfileContext = createContext();
 
@@ -14,44 +19,89 @@ export const useProfile = () => {
 
 export function ProfileProvider({ children }) {
     const [userStats, setUserStats] = useState(null);
+    const [reviewStats, setReviewStats] = useState(null);
+    const [gameStats, setGameStats] = useState(null);
+    const [monthlyActivity, setMonthlyActivity] = useState(null);
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState([]);
-    const { user, isAuthenticated } = useAuth();
+    const { user } = useAuth();
 
-    const loadUserStats = async () => {
+    const loadAllStats = async () => {
         try {
             setLoading(true);
             setErrors([]);
-            console.log("Loading user stats...");
-            
-            const response = await getUserStatsRequest();
-            console.log("User stats loaded:", response.data);
-            
-            setUserStats(response.data);
-            return response.data;
+
+            // Cargar todas las estadísticas en paralelo
+            const [userStatsData, reviewStatsData, gameStatsData, activityData] = await Promise.all([
+                getUserStatsRequest(),
+                getReviewStatsRequest(),
+                getGameStatsRequest(),
+                getMonthlyActivityRequest()
+            ]);
+
+            setUserStats(userStatsData.data);
+            setReviewStats(reviewStatsData.data);
+            setGameStats(gameStatsData.data);
+            setMonthlyActivity(activityData.data);
+
         } catch (error) {
-            console.error("Error loading user stats:", error);
-            let errorMessage = "Error loading profile statistics";
-            
-            if (error.response?.data?.message) {
-                errorMessage = error.response.data.message;
-            } else if (error.response?.data?.error) {
-                errorMessage = error.response.data.error;
-            }
-            
-            setErrors([errorMessage]);
-            setUserStats(null);
+            console.error("Error loading stats:", error);
+            setErrors(["Error loading profile statistics"]);
             throw error;
         } finally {
             setLoading(false);
         }
     };
 
-    const refreshStats = () => {
-        if (isAuthenticated) {
-            console.log("Refreshing stats...");
-            loadUserStats();
+    const loadUserStats = async () => {
+        try {
+            setLoading(true);
+            const response = await getUserStatsRequest();
+            setUserStats(response.data);
+            return response.data;
+        } catch (error) {
+            console.error("Error loading user stats:", error);
+            throw error;
+        } finally {
+            setLoading(false);
         }
+    };
+
+    const loadReviewStats = async () => {
+        try {
+            const response = await getReviewStatsRequest();
+            setReviewStats(response.data);
+            return response.data;
+        } catch (error) {
+            console.error("Error loading review stats:", error);
+            throw error;
+        }
+    };
+
+    const loadGameStats = async () => {
+        try {
+            const response = await getGameStatsRequest();
+            setGameStats(response.data);
+            return response.data;
+        } catch (error) {
+            console.error("Error loading game stats:", error);
+            throw error;
+        }
+    };
+
+    const loadMonthlyActivity = async (months = 6) => {
+        try {
+            const response = await getMonthlyActivityRequest(months);
+            setMonthlyActivity(response.data);
+            return response.data;
+        } catch (error) {
+            console.error("Error loading monthly activity:", error);
+            throw error;
+        }
+    };
+
+    const refreshStats = () => {
+        loadAllStats();
     };
 
     const clearErrors = () => {
@@ -59,21 +109,24 @@ export function ProfileProvider({ children }) {
     };
 
     useEffect(() => {
-        console.log("ProfileProvider - Auth status:", { isAuthenticated, user });
-        if (isAuthenticated && user) {
-            console.log("Loading stats for authenticated user");
-            loadUserStats();
-        } else {
-            console.log("User not authenticated, clearing stats");
-            setUserStats(null);
+        if (user) {
+            loadAllStats();
         }
-    }, [isAuthenticated, user]);
+    }, [user]);
 
     return (
         <ProfileContext.Provider value={{
             userStats,
+            reviewStats,
+            gameStats,
+            monthlyActivity,
             loading,
             errors,
+            loadAllStats,
+            loadUserStats,
+            loadReviewStats,
+            loadGameStats,
+            loadMonthlyActivity,
             refreshStats,
             clearErrors
         }}>

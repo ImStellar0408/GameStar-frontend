@@ -123,12 +123,10 @@ export default function Header() {
             <li>
               <Link to="/" onClick={handleLogout}>Log Out</Link> 
             </li>
-            
-            <Link to="/profile"><li className="welcome-message">
+            <li className="welcome-message">
               <i className='bx bx-user'></i>
               Welcome: {user?.username} 
-            </li></Link>
-            
+            </li>
           </>
         ) : (
           <>
