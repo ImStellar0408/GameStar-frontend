@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
 
   const signUp = async (userData) => {
     try {
-      setErrors([]); // Limpiar errores anteriores
+      setErrors([]); 
       const response = await registerRequest(userData);
       console.log("Registration successful:", response.data);
       setUser(response.data);

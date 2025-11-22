@@ -10,7 +10,6 @@ export default function Header() {
   const gamesDropdownRef = useRef(null);
   const reviewsDropdownRef = useRef(null);
 
-  // Cerrar dropdowns al hacer click fuera
   useEffect(() => {
     function handleClickOutside(event) {
       if (gamesDropdownRef.current && !gamesDropdownRef.current.contains(event.target)) {
@@ -41,12 +40,12 @@ export default function Header() {
 
   const toggleGamesDropdown = () => {
     setGamesDropdown(!gamesDropdown);
-    setReviewsDropdown(false); // Cerrar el otro dropdown
+    setReviewsDropdown(false);
   };
 
   const toggleReviewsDropdown = () => {
     setReviewsDropdown(!reviewsDropdown);
-    setGamesDropdown(false); // Cerrar el otro dropdown
+    setGamesDropdown(false);
   };
 
   const closeAllDropdowns = () => {
@@ -66,7 +65,6 @@ export default function Header() {
       <ul>
         {isAuthenticated ? (
           <>
-            {/* Games Dropdown */}
             <li 
               className="dropdown"
               ref={gamesDropdownRef}
@@ -91,7 +89,6 @@ export default function Header() {
               )}
             </li>
 
-            {/* Reviews Dropdown */}
             <li 
               className="dropdown"
               ref={reviewsDropdownRef}

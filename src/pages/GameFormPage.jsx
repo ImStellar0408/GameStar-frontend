@@ -98,7 +98,6 @@ function GameFormPage() {
 
                 <form className="game-form" onSubmit={onSubmit}>
                     <div className="form-grid">
-                        {/* Title */}
                         <div className="form-group">
                             <div className="input-wrapper">
                                 <i className='bx bx-rename input-icon'></i>
@@ -113,7 +112,6 @@ function GameFormPage() {
                             {formErrors.title && <span className="field-error">{formErrors.title.message}</span>}
                         </div>
 
-                        {/* Genre */}
                         <div className="form-group">
                             <div className="input-wrapper">
                                 <i className='bx bx-category input-icon'></i>
@@ -139,7 +137,6 @@ function GameFormPage() {
                             {formErrors.genre && <span className="field-error">{formErrors.genre.message}</span>}
                         </div>
 
-                        {/* Platform */}
                         <div className="form-group">
                             <div className="input-wrapper">
                                 <i className='bx bx-devices input-icon'></i>
@@ -169,7 +166,6 @@ function GameFormPage() {
                             {formErrors.platform && <span className="field-error">{formErrors.platform.message}</span>}
                         </div>
 
-                        {/* Developer */}
                         <div className="form-group">
                             <div className="input-wrapper">
                                 <i className='bx bx-building input-icon'></i>
@@ -186,7 +182,6 @@ function GameFormPage() {
                     </div>
 
                     <div className="form-row">
-                        {/* Release Year */}
                         <div className="form-group">
                             <div className="input-wrapper">
                                 <i className='bx bx-calendar input-icon'></i>
@@ -207,7 +202,6 @@ function GameFormPage() {
                             {formErrors.releaseYear && <span className="field-error">{formErrors.releaseYear.message}</span>}
                         </div>
 
-                        {/* Completed */}
                         <div className="form-group">
                             <div className="checkbox-wrapper">
                                 <label className="checkbox-container">
@@ -226,7 +220,6 @@ function GameFormPage() {
                         </div>
                     </div>
 
-                    {/* Cover Image */}
                     <div className="form-section">
                         <div className="input-wrapper">
                             <i className='bx bx-movie-play input-icon'></i>
@@ -257,7 +250,6 @@ function GameFormPage() {
                         </div>
                     </div>
 
-                    {/* Description */}
                     <div className="form-section">
                         <div className="input-wrapper">
                             <i className='bx bx-text textarea-icon'></i>
@@ -275,7 +267,6 @@ function GameFormPage() {
                         {formErrors.description && <span className="field-error">{formErrors.description.message}</span>}
                     </div>
 
-                    {/* Action Buttons */}
                     <div className="form-actions">
                         <button
                             type="button"

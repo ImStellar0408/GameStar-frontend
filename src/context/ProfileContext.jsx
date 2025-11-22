@@ -31,7 +31,6 @@ export function ProfileProvider({ children }) {
             setLoading(true);
             setErrors([]);
 
-            // Cargar todas las estadísticas en paralelo
             const [userStatsData, reviewStatsData, gameStatsData, activityData] = await Promise.all([
                 getUserStatsRequest(),
                 getReviewStatsRequest(),

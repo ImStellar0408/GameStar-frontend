@@ -73,7 +73,6 @@ function ReviewCard({ review, isOwner = false }) {
         ));
     };
 
-    // Obtener información del juego desde gameId si está disponible
     const gameInfo = review.gameId || {};
     const gameTitle = gameInfo.title || review.gameTitle;
     const gameDeveloper = gameInfo.developer || review.developer;
@@ -88,7 +87,6 @@ function ReviewCard({ review, isOwner = false }) {
 
     return (
         <>
-            {/* Card Normal */}
             <div className="review-card">
                 <div className="review-card-compact" onClick={toggleExpand}>
                     <div className="compact-header">
@@ -153,7 +151,6 @@ function ReviewCard({ review, isOwner = false }) {
                     </div>
                 </div>
 
-                {/* Overlay de eliminación */}
                 {isDeleting && (
                     <div className="delete-overlay">
                         <div className="delete-animation">
@@ -164,12 +161,10 @@ function ReviewCard({ review, isOwner = false }) {
                 )}
             </div>
 
-            {/* Modal Expandido */}
             {isExpanded && (
                 <div className="modal-overlay" onClick={() => setIsExpanded(false)}>
                     <div className="review-card-expanded" onClick={(e) => e.stopPropagation()}>
                         <div className="expanded-container">
-                            {/* Header */}
                             <div className="expanded-header">
                                 <div className="title-section">
                                     <h2>{gameTitle}</h2>
@@ -186,10 +181,8 @@ function ReviewCard({ review, isOwner = false }) {
                                 </button>
                             </div>
 
-                            {/* Contenido Principal */}
                             <div className="expanded-content">
                                 
-                                {/* Rating Principal */}
                                 <div className="main-rating-section">
                                     <div className="rating-visual">
                                         <div className="stars-large">
@@ -208,7 +201,6 @@ function ReviewCard({ review, isOwner = false }) {
                                     )}
                                 </div>
 
-                                {/* Grid de Detalles */}
                                 <div className="details-grid">
                                     <div className="detail-card">
                                         <i className='bx bx-category'></i>
@@ -242,7 +234,6 @@ function ReviewCard({ review, isOwner = false }) {
                                     </div>
                                 </div>
 
-                                {/* Review Text */}
                                 {review.reviewText && (
                                     <div className="review-text-section">
                                         <h4>Review</h4>
@@ -252,7 +243,6 @@ function ReviewCard({ review, isOwner = false }) {
                                     </div>
                                 )}
 
-                                {/* Información del Usuario */}
                                 <div className="user-info-section">
                                     <div className="user-avatar">
                                         <i className='bx bx-user'></i>
@@ -267,7 +257,6 @@ function ReviewCard({ review, isOwner = false }) {
                                     </div>
                                 </div>
 
-                                {/* Botones de Acción */}
                                 {actualIsOwner && (
                                     <div className="action-buttons">
                                         <Link to={`/reviews/edit/${review._id}`} className="action-btn edit-btn">

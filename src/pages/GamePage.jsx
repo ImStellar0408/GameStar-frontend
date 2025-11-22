@@ -14,7 +14,6 @@ function GamePage() {
         search: ''
     });
 
-    // Listas completas de géneros y plataformas
     const allGenres = [
         'Action', 'Adventure', 'RPG', 'Strategy', 'Sports', 'Racing',
         'Shooter', 'Indie', 'Metroidvania', 'Simulation', 'Horror',
@@ -32,11 +31,9 @@ function GamePage() {
         getGames();
     }, []);
 
-    // Actualizar juegos filtrados
     useEffect(() => {
         let result = [...games];
 
-        // Aplicar filtros
         if (filters.genre) {
             result = result.filter(game => game.genre === filters.genre);
         }
@@ -348,7 +345,6 @@ function GamePage() {
                     </div>
 
                     <div className="filters-grid">
-                        {/* Búsqueda con ícono */}
                         <div className="filter-group">
                             <label>
                                 <i className='bx bx-search'></i>
@@ -366,7 +362,6 @@ function GamePage() {
                             </div>
                         </div>
 
-                        {/* Filtro por Género */}
                         <div className="filter-group">
                             <label>
                                 <i className='bx bx-category'></i>
@@ -386,7 +381,6 @@ function GamePage() {
                             </div>
                         </div>
 
-                        {/* Filtro por Plataforma */}
                         <div className="filter-group">
                             <label>
                                 <i className='bx bx-devices'></i>
@@ -406,7 +400,6 @@ function GamePage() {
                             </div>
                         </div>
 
-                        {/* Filtro por Estado */}
                         <div className="filter-group">
                             <label>
                                 <i className='bx bx-check-circle'></i>
@@ -426,7 +419,6 @@ function GamePage() {
                         </div>
                     </div>
 
-                    {/* Contador de resultados mejorado */}
                     <div className="results-count">
                         <div className="count-badge">
                             <i className='bx bx-game'></i>
@@ -438,7 +430,6 @@ function GamePage() {
                     </div>
                 </div>
 
-                {/* Grid de Juegos */}
                 {filteredGames.length > 0 ? (
                     <div className="games-grid">
                         {filteredGames.map(game => (

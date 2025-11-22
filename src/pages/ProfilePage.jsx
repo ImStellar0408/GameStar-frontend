@@ -27,7 +27,6 @@ function ProfilePage() {
     return (
         <div className="profile-page">
             <div className="profile-container">
-                {/* Header del Perfil */}
                 <div className="profile-header">
                     <div className="profile-avatar">
                         <i className='bx bx-user'></i>
@@ -54,12 +53,10 @@ function ProfilePage() {
                     </div>
                 )}
 
-                {/* Estadísticas Principales */}
                 {userStats && (
                     <div className="stats-section">
                         <h2 className="section-title">Your Gaming Statistics</h2>
-                        
-                        {/* Tarjetas de Estadísticas Principales */}
+
                         <div className="stats-grid-main">
                             <div className="stat-card main-stat">
                                 <div className="stat-icon">
@@ -102,9 +99,7 @@ function ProfilePage() {
                             </div>
                         </div>
 
-                        {/* Estadísticas Detalladas */}
                         <div className="stats-grid-detailed">
-                            {/* Distribución de Ratings */}
                             <div className="stat-card detailed-stat">
                                 <h4>Rating Distribution</h4>
                                 <div className="rating-bars">
@@ -129,7 +124,6 @@ function ProfilePage() {
                                 </div>
                             </div>
 
-                            {/* Estadísticas de Recomendación */}
                             <div className="stat-card detailed-stat">
                                 <h4>Recommendations</h4>
                                 <div className="recommendation-stats">
@@ -151,7 +145,6 @@ function ProfilePage() {
                                 </div>
                             </div>
 
-                            {/* Distribución de Dificultad */}
                             <div className="stat-card detailed-stat">
                                 <h4>Difficulty Preference</h4>
                                 <div className="difficulty-stats">
@@ -174,7 +167,6 @@ function ProfilePage() {
                                 </div>
                             </div>
 
-                            {/* Preferencias */}
                             <div className="stat-card detailed-stat">
                                 <h4>Your Preferences</h4>
                                 <div className="preference-stats">
@@ -209,7 +201,6 @@ function ProfilePage() {
                             </div>
                         </div>
 
-                        {/* Resumen de Actividad */}
                         <div className="activity-summary">
                             <h3>Activity Summary</h3>
                             <div className="summary-grid">

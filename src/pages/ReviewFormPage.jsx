@@ -17,14 +17,12 @@ function ReviewFormPage() {
     const punctuationValue = watch("punctuation", 0);
     const selectedGameId = watch("gameId");
 
-    // Limpiar errores al montar el componente
     useEffect(() => {
         clearErrors();
     }, []);
 
     useEffect(() => {
         if (params.id) {
-            // Modo edición
             async function loadReview() {
                 try {
                     setIsEditing(true);
@@ -40,10 +38,8 @@ function ReviewFormPage() {
 
                     setEditingReview(review);
                     
-                    // Cargar juegos disponibles para mostrar en el selector
                     await getAvailableGames();
                     
-                    // Manejar gameId - puede ser string o objeto poblado
                     const gameIdValue = review.gameId?._id || review.gameId;
                     
                     reset({
@@ -68,7 +64,6 @@ function ReviewFormPage() {
             }
             loadReview();
         } else {
-            // Modo creación - cargar juegos disponibles
             setIsEditing(false);
             setEditingReview(null);
             getAvailableGames().catch(error => {
@@ -77,7 +72,6 @@ function ReviewFormPage() {
         }
     }, [params.id]);
 
-    // Efecto para cargar datos del juego seleccionado (solo en modo creación)
     useEffect(() => {
         if (!isEditing && selectedGameId && availableGames.length > 0) {
             const game = availableGames.find(g => g._id === selectedGameId);
@@ -87,13 +81,11 @@ function ReviewFormPage() {
                 setValue("platform", game.platform, { shouldValidate: true });
                 setValue("developer", game.developer, { shouldValidate: true });
                 
-                // Cambiar la key cuando cambia el juego para forzar reinicio del video
                 setCurrentVideoKey(prev => prev + 1);
             }
         }
     }, [selectedGameId, availableGames, setValue, isEditing]);
 
-    // Función para determinar si una URL es un formato animado
     const isAnimatedMedia = (url) => {
         if (!url) return false;
         const animatedExtensions = ['.gif', '.webm', '.mp4', '.mov', '.avi'];
@@ -101,7 +93,6 @@ function ReviewFormPage() {
         return animatedExtensions.some(ext => urlLower.includes(ext));
     };
 
-    // Función para determinar el tipo de medio
     const getMediaType = (url) => {
         if (!url) return 'image';
         const urlLower = url.toLowerCase();
@@ -115,7 +106,6 @@ function ReviewFormPage() {
         return 'image';
     };
 
-    // Hook para manejar el video
     const useVideoReset = (videoUrl) => {
         const videoRef = useRef(null);
 
@@ -132,7 +122,6 @@ function ReviewFormPage() {
         return videoRef;
     };
 
-    // Componente para video con reinicio automático
     const VideoPlayer = ({ src, className }) => {
         const videoRef = useVideoReset(src);
 
@@ -162,7 +151,6 @@ function ReviewFormPage() {
         );
     };
 
-    // Función para renderizar la portada del juego
     const renderGameCover = (game) => {
         if (!game?.coverImageUrl) return null;
 
@@ -217,7 +205,7 @@ function ReviewFormPage() {
             setFormLoading(true);
             clearErrors();
             
-            // Preparar datos para enviar - solo campos editables en modo edición
+
             const reviewDataToSend = {
                 punctuation: Number(data.punctuation),
                 reviewText: data.reviewText,
@@ -226,7 +214,6 @@ function ReviewFormPage() {
                 wouldRecommend: Boolean(data.wouldRecommend)
             };
 
-            // En modo creación, incluir gameId
             if (!isEditing) {
                 reviewDataToSend.gameId = data.gameId;
             }
@@ -276,10 +263,10 @@ function ReviewFormPage() {
         );
     };
 
-    // Encontrar el juego seleccionado para mostrar en la vista previa
+
     const selectedGame = selectedGameId ? availableGames.find(game => game._id === selectedGameId) : null;
 
-    // En modo edición, usar los datos de la review que se está editando
+
     const displayGame = isEditing && editingReview ? {
         title: editingReview.gameTitle,
         developer: editingReview.developer,
@@ -314,7 +301,6 @@ function ReviewFormPage() {
                 )}
                 
                 <form className="review-form" onSubmit={onSubmit}>
-                    {/* Selección de Juego - Solo en modo creación */}
                     {!isEditing && (
                         <div className="form-section">
                             <label className="section-label">Select Game from Your Library</label>
@@ -337,7 +323,6 @@ function ReviewFormPage() {
                         </div>
                     )}
 
-                    {/* Información del juego seleccionado */}
                     {displayGame && (
                         <div className="game-preview">
                             <div className="game-preview-content">
@@ -364,13 +349,11 @@ function ReviewFormPage() {
                                         {displayGame.developer}
                                     </span>
                                 </div>
-                                {/* Renderizar portada del juego */}
                                 {renderGameCover(displayGame)}
                             </div>
                         </div>
                     )}
 
-                    {/* Mensaje cuando no hay juegos disponibles (solo en modo creación) */}
                     {!isEditing && availableGames.length === 0 && !formLoading && (
                         <div className="empty-games-state">
                             <div className="empty-games-content">
@@ -389,10 +372,8 @@ function ReviewFormPage() {
                         </div>
                     )}
 
-                    {/* Campos de juego (solo en modo creación o si no hay juego seleccionado) */}
                     {(!isEditing && !selectedGame) && (
                         <div className="form-grid">
-                            {/* Game Title */}
                             <div className="form-group">
                                 <div className="input-wrapper">
                                     <i className='bx bx-rename input-icon'></i>
@@ -407,7 +388,6 @@ function ReviewFormPage() {
                                 {formErrors.gameTitle && <span className="field-error">{formErrors.gameTitle.message}</span>}
                             </div>
 
-                            {/* Genre */}
                             <div className="form-group">
                                 <div className="input-wrapper">
                                     <i className='bx bx-category input-icon'></i>
@@ -436,7 +416,6 @@ function ReviewFormPage() {
                                 {formErrors.genre && <span className="field-error">{formErrors.genre.message}</span>}
                             </div>
 
-                            {/* Platform */}
                             <div className="form-group">
                                 <div className="input-wrapper">
                                     <i className='bx bx-devices input-icon'></i>
@@ -460,7 +439,6 @@ function ReviewFormPage() {
                                 {formErrors.platform && <span className="field-error">{formErrors.platform.message}</span>}
                             </div>
 
-                            {/* Developer */}
                             <div className="form-group">
                                 <div className="input-wrapper">
                                     <i className='bx bx-building input-icon'></i>
@@ -477,7 +455,6 @@ function ReviewFormPage() {
                         </div>
                     )}
 
-                    {/* Star Rating */}
                     <div className="form-section">
                         <label className="section-label">Rating</label>
                         {renderStarRating()}
@@ -485,7 +462,6 @@ function ReviewFormPage() {
                     </div>
 
                     <div className="form-row">
-                        {/* Hours Played */}
                         <div className="form-group">
                             <div className="input-wrapper">
                                 <i className='bx bx-time input-icon'></i>
@@ -504,7 +480,6 @@ function ReviewFormPage() {
                             {formErrors.hoursPlayed && <span className="field-error">{formErrors.hoursPlayed.message}</span>}
                         </div>
 
-                        {/* Difficulty */}
                         <div className="form-group">
                             <div className="input-wrapper">
                                 <i className='bx bx-trophy input-icon'></i>
@@ -523,7 +498,6 @@ function ReviewFormPage() {
                         </div>
                     </div>
 
-                    {/* Review Text */}
                     <div className="form-section">
                         <div className="input-wrapper">
                             <i className='bx bx-text textarea-icon'></i>
@@ -541,7 +515,6 @@ function ReviewFormPage() {
                         {formErrors.reviewText && <span className="field-error">{formErrors.reviewText.message}</span>}
                     </div>
 
-                    {/* Would Recommend */}
                     <div className="form-checkbox">
                         <label className="checkbox-wrapper">
                             <input
@@ -557,7 +530,6 @@ function ReviewFormPage() {
                         </label>
                     </div>
 
-                    {/* Action Buttons */}
                     <div className="form-actions">
                         <button 
                             type="button"

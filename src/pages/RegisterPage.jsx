@@ -40,7 +40,6 @@ function RegisterPage() {
           To track your games and discoveries.
         </p>
         
-        {/* Mostrar errores del backend */}
         {authErrors.map((error, i) => (
           <div key={i} className="error-message">
             {error}
@@ -102,7 +101,6 @@ function RegisterPage() {
           </button>
         </form>
 
-        {/* Enlace para ir al login */}
         <div className="register-link">
           <p>Already have an account? <Link to="/login">Sign in</Link></p>
         </div>

@@ -56,7 +56,6 @@ function GameCard({ game }) {
 
     return (
         <>
-            {/* Card Normal */}
             <div className="game-card">
                 <div 
                     className="game-card-compact" 
@@ -65,7 +64,6 @@ function GameCard({ game }) {
                     onMouseLeave={() => setIsHovered(false)}
                 >
                     <div className="card-image">
-                        {/* Renderizado condicional para diferentes tipos de carátula */}
                         {isVideoCover ? (
                             <video
                                 ref={videoRef}
@@ -75,7 +73,7 @@ function GameCard({ game }) {
                                 playsInline
                                 autoPlay
                                 className="cover-media"
-                                poster={game.coverImageUrl.replace(/\.(mp4|webm|ogg)$/i, '.jpg')} // Fallback image
+                                poster={game.coverImageUrl.replace(/\.(mp4|webm|ogg)$/i, '.jpg')} 
                             />
                         ) : isAnimatedImage ? (
                             <img 
@@ -99,7 +97,6 @@ function GameCard({ game }) {
                             {game.isCompleted ? '✓ Completed' : '▶ Playing'}
                         </div>
                         
-                        {/* Indicador de contenido animado */}
                         {(isVideoCover || isAnimatedImage) && (
                             <div className="animated-indicator">
                                 <i className='bx bx-play-circle'></i>
@@ -151,7 +148,6 @@ function GameCard({ game }) {
                 )}
             </div>
 
-            {/* Modal Expandido */}
             {isExpanded && (
                 <div className="modal-overlay" onClick={() => setIsExpanded(false)}>
                     <div 
@@ -175,7 +171,6 @@ function GameCard({ game }) {
                             </div>
 
                             <div className="expanded-content">
-                                {/* Imagen/Video Principal en el Modal */}
                                 <div className="main-info-section">
                                     <div className="game-image">
                                         {isVideoCover ? (
@@ -231,7 +226,6 @@ function GameCard({ game }) {
                                     </div>
                                 </div>
 
-                                {/* Resto del contenido del modal se mantiene igual */}
                                 <div className="details-grid">
                                     <div className="detail-card">
                                         <i className='bx bx-building'></i>
